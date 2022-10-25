@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserCreationForm
 from django.contrib.auth import authenticate, login
-from testapp.models import Teacher, Student
+from testapp.models import Teacher, Student, Group
 
 class RegisterView(View):
 
@@ -28,7 +28,8 @@ class RegisterView(View):
                 teacher = Teacher(user_id=user, full_name="Ваше ім'я", contacts='Ваші контакти.')
                 teacher.save()
             else:
-                student = Student(user_id=user, full_name="Ваше ім'я")
+                empty_group = Group.objects.get(group_code="Немає")
+                student = Student(user_id=user, full_name="Ваше ім'я", group=empty_group)
                 student.save()
             return redirect('main')
 
