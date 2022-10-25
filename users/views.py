@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from testapp.models import Teacher, Student
 
 class RegisterView(View):
 
@@ -20,8 +21,15 @@ class RegisterView(View):
             form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
+            status = form.cleaned_data.get('status')
             user = authenticate(username=username, password=password)
             login(request, user)
+            if status == 'T':
+                teacher = Teacher(user_id=user, full_name="Ваше ім'я", contacts='Ваші контакти.')
+                teacher.save()
+            else:
+                student = Student(user_id=user, full_name="Ваше ім'я")
+                student.save()
             return redirect('main')
 
         ctx = {
