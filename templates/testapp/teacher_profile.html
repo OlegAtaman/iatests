@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>Ваше ім'я:</p>
+    <h1>{{ teacher.full_name }}</h1>
+    <p>Ваші контакти:</p>
+    <p>{{ teacher.contacts }}</p>
+    <p>Ви викладаєте:</p>
+    <p>{{ teacher.subjects }}</p>
+    <hr>
+    <h1>Ваші курси:</h1>
+{% endblock %}

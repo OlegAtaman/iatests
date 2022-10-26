@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="post">
+        <p>Ваші ПІБ:</p>
+        <input type="text" name="full_name" value="{{ student.full_name }}">
+        <input type="text" name="full_name" value="">
+        <input type="submit">
+    </form>
+{% endblock %}

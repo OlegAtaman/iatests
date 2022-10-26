@@ -31,7 +31,7 @@ class RegisterView(View):
                 empty_group = Group.objects.get(group_code="Немає")
                 student = Student(user_id=user, full_name="Ваше ім'я", group=empty_group)
                 student.save()
-            return redirect('main')
+            return redirect('profile_edit')
 
         ctx = {
             'form' : form

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>Ваше ім'я:</p>
+    <h1>{{ student.full_name }}</h1>
+    <p>Ви знаходитесь у групі:</p>
+    <h1>{{ student.group.group_code }}</h1>
+    <hr>
+    <h1>Ваші курси:</h1>
+{% endblock %}
