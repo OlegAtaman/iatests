@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
+{% block auth_link %}
+<li><a href="{% url 'logout' %}">Вийти</a></li>
+{% endblock %}
 {% block content %}
     <p>Ваше ім'я:</p>
     <h1>{{ student.full_name }}</h1>
     <p>Ви знаходитесь у групі:</p>
     <h1>{{ student.group.group_code }}</h1>
+    <a href="{% url 'profile_edit' %}">Редагувати профіль</a>
     <hr>
     <h1>Ваші курси:</h1>
 {% endblock %}

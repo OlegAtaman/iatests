@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
+{% block auth_link %}
+<li><a href="{% url 'logout' %}">Вийти</a></li>
+{% endblock %}
 {% block content %}
     <p>Ваше ім'я:</p>
     <h1>{{ teacher.full_name }}</h1>
     <p>Ваші контакти:</p>
     <p>{{ teacher.contacts }}</p>
     <p>Ви викладаєте:</p>
-    <p>{{ teacher.subjects }}</p>
+    {% for subject in subjects %}
+    <h4>{{ subject.subject_name }}</h4>
+    {% endfor %}
+    <a href="{% url 'profile_edit' %}">Редагувати профіль</a>
     <hr>
     <h1>Ваші курси:</h1>
 {% endblock %}

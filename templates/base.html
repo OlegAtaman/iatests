@@ -8,9 +8,11 @@
     <ul>
         <li><a href="{% url 'main' %}">IATESTS</a></li>
         {% if user.is_authenticated %}
-        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% block auth_link %}
+        <li><a href="{% url 'profile' %}">Профіль</a></li>
+        {% endblock %}
         {% else %}
-        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'login' %}">Увійти до акаунту</a></li>
         {% endif %}
     </ul>
     User: {{ user }}
