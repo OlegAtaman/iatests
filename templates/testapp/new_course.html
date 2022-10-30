@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Створити новий курс</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>Назва:</p>
+    <input type="text" name="name">
+    <p>Опис курсу:</p>
+    <input type="text" name="description">
+    <input type="submit">
+</form>
+{% endblock %}

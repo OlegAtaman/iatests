@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Увійти до курсу</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>Код курсу:</p>
+    <input type="text" name="code">
+    <input type="submit">
+</form>
+<p>Примітка: код курсу вам має надати викладач</p>
+{% endblock %}

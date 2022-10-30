@@ -22,3 +22,9 @@ class Subject(models.Model):
 class TeachersToSubjects(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+
+class Course(models.Model):
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    code = models.CharField(max_length=10)
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)

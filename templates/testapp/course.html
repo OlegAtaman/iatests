@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+    {% if user.status == "T" %}
+    <p>Код курсу: <b>{{ course.code }}</b></p>
+    {% endif %}
+    <h3>Викладачі:</h3>
+    <p>
+    {% for teacher in teachers %}
+        {{ teacher.full_name }}<br>
+    {% endfor %}
+    </p>
+    <hr>
+{% endblock %}
