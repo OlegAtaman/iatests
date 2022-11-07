@@ -10,4 +10,5 @@ urlpatterns = [
     path('c/<code>/', views.CourseView.as_view(), name='course'),
     path('new_course/', views.NewCourseView.as_view(), name='add_course'),
     path('join_course/', views.JoinCourseView.as_view(), name='join_course'),
+    path('c/<code>/new_test/', views.NewTestView.as_view(), name='add_test'),
 ]

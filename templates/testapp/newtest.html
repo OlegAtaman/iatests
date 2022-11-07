@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>Створити новий тест</h1>
+<input type="hidden" name="url" value="{% url 'course' code %}">
+<form method="post">
+    {% csrf_token %}
+    <p class="hi">Назва: <input  type="text" name="name"></p>
+    <p>Опис:</p>
+    <textarea name="desc"></textarea>
+    <p class="m_points">Максимальний бал: <input type="number" name="m_points"></p>
+    <p class="t_cont">Час на проходження: <input type="time" name="sub_time"></p>
+    <p class="dt_cont">Дата та час публікації тесту: <input type="datetime" name="pub_time"></p>
+    <hr>
+    <div id="cont">
+
+    </div>
+    <button type="button" class="new_quetion_btn">Додати питання</button>
+    <button type="button" class="ubutton">Відправити</button>
+    </form>
+
+    <script src="{% static 'js/creator.js' %}"></script>
+{% endblock %}

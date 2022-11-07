@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from testapp.funcs import create_random_chars
-from .models import Course, Subject, Teacher, Student, Group
-from django.http import HttpResponseNotFound, HttpResponse
-
+from .models import Course, Subject, Teacher, Student, Group, Test, Quetion, Answer
+from django.http import HttpResponseNotFound, HttpResponse, JsonResponse
+import json
 
 @login_required(login_url='login')
 def profile_view(request):
@@ -151,11 +151,33 @@ class CourseView(View):
                     tusers.append(tuser)
                 ctx = {'course' : course, 'teachers' : tusers}
                 if request.user in course.users.all():
-                    print(4)
                     return render(request, 'testapp/course.html', ctx)
                 else:
                     return HttpResponseNotFound()
             except:
                 return HttpResponseNotFound()
         else:
+            print(7)
             return redirect('login')
+
+
+class NewTestView(View):
+    def get(self, request, code):
+        return render(request, 'testapp/newtest.html', {"code" : code})
+
+    def post(self, request, code):
+        args = request.POST
+        print(json.loads(request.POST.get('q')))
+        t = Test(title=args.get('qname'), description=args.get('desc'),
+            time_to_submit=args.get('time'), time_to_publish=args.get('pub_time'),
+            max_points=args.get('m_points'), course=Course.objects.get(code=code))
+        t.save()
+        for quetion in json.loads(request.POST.get('q')):
+            q = Quetion(content=quetion.get('text'),
+            points=quetion.get('points'), test=t)
+            q.save()
+            for answer in quetion.get('ans'):
+                a = Answer(content=answer.get('text'),
+                is_correct=answer.get('is_correct'), quetion=q)
+                a.save()
+        return HttpResponse()

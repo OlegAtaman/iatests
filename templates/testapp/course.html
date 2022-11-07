@@ -11,5 +11,7 @@
         {{ teacher.full_name }}<br>
     {% endfor %}
     </p>
+    <a href="{% url 'add_test' course.code %}">Створити новий тест</a>
     <hr>
+    <h1>Активні тести:</h1>
 {% endblock %}

@@ -27,4 +27,22 @@ class Course(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     code = models.CharField(max_length=10)
     title = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
+    description = models.TextField()
+
+class Test(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    max_points = models.DecimalField(max_digits=10, decimal_places=0)
+    time_to_submit = models.TimeField()
+    time_to_publish = models.DateTimeField(auto_now=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+class Quetion(models.Model):
+    content = models.CharField(max_length=150)
+    points = models.DecimalField(max_digits=10, decimal_places=2)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+
+class Answer(models.Model):
+    content = models.CharField(max_length=150)
+    is_correct = models.BooleanField()
+    quetion = models.ForeignKey(Quetion, on_delete=models.CASCADE)
