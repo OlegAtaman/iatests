@@ -13,7 +13,7 @@ $(document).ready(function(){
                 var text = $(this).text();
                 var is_correct = false;
                 if (text.slice(3, 12) == "[CORRECT]") {
-                    text = text.slice(12, text.length + 1);
+                    text = text.slice(13, text.length + 1);
                     is_correct = true;
                 } else {
                     text = text.slice(3, text.length + 1);

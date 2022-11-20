@@ -1,0 +1,24 @@
+TodoList
+
+You can add tasks and debug problems that you have found here.
+If you want to take the task - just write your name after hash like # Oleg.
+
+E - easy | M - medium | H - hard
+
+FRONTEND
+- H | Main HTML/CSS # Andry
+- E | Confirmation to start test [JS]
+- E | Warnings and notes (Course does not exist alert) [JS]
+- M | Timer in test [JS]
+
+BACKEND
+- M | DeleteCourseConfirmView
+- M | DeleteTestConfirmView
+- H+ | Late post funtion [Threading or asynk]
+- E | Type of quetion function
+- H+ | Deadline function [Threading or asynk]
+- H | Student-testsView for teacher (HTML table with pages) [JS/AJAX + Django]
+- M | Validation and filtering of inputs (Test, Student/Teacher creation)
+- E | Conflict between name="{{quetion.id}}" and name="{{answer.id}}"
+-------AFTER-------
+- Refactoring (clearize views.py)

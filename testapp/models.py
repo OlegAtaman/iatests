@@ -46,3 +46,10 @@ class Answer(models.Model):
     content = models.CharField(max_length=150)
     is_correct = models.BooleanField()
     quetion = models.ForeignKey(Quetion, on_delete=models.CASCADE)
+
+class Submition(models.Model):
+    submited = models.BooleanField(default=False)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    points = models.DecimalField(max_digits=10, decimal_places=0)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    answers = models.ManyToManyField(Answer)

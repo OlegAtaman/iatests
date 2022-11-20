@@ -14,4 +14,17 @@
     <a href="{% url 'add_test' course.code %}">Створити новий тест</a>
     <hr>
     <h1>Активні тести:</h1>
+    {% for test in tests %}
+        <div style="border: 1px solid black; margin: 5px; padding: 5px;">
+            <h3>{{ test.title }}</h3>
+            <p>{{ test.description }}</p>
+            <p>Проходження займе: {{ test.time_to_submit }}</p>
+            <a href="{% url 'test' course.code test.id %}">
+                {% if user.status == 'S' %}
+                Перейти до виконання
+                {% else %}
+                Переглянути
+                {% endif %}</a>
+        </div>
+    {% endfor %}
 {% endblock %}

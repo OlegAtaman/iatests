@@ -1,10 +1,15 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.views import View
-from testapp.funcs import create_random_chars
-from .models import Course, Subject, Teacher, Student, Group, Test, Quetion, Answer
-from django.http import HttpResponseNotFound, HttpResponse, JsonResponse
 import json
+
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
+from django.shortcuts import redirect, render
+from django.views import View
+
+from testapp.funcs import create_random_chars, get_correct
+
+from .models import (Answer, Course, Group, Quetion, Student, Subject, Teacher,
+                     Test, Submition)
+
 
 @login_required(login_url='login')
 def profile_view(request):
@@ -149,15 +154,29 @@ class CourseView(View):
                 for user in teachers:
                     tuser = Teacher.objects.get(user_id=user)
                     tusers.append(tuser)
-                ctx = {'course' : course, 'teachers' : tusers}
+                tests = Test.objects.filter(course=course)
+                ctx = {'course' : course, 'teachers' : tusers, 'tests' : tests}
                 if request.user in course.users.all():
                     return render(request, 'testapp/course.html', ctx)
                 else:
                     return HttpResponseNotFound()
             except:
                 return HttpResponseNotFound()
+
+            # course = Course.objects.get(code=code)
+            # teachers = course.users.all().filter(status='T')
+            # tusers = []
+            # for user in teachers:
+            #     tuser = Teacher.objects.get(user_id=user)
+            #     tusers.append(tuser)
+            # tests = Test.objects.filter(course=course)
+            # print(tests)
+            # ctx = {'course' : course, 'teachers' : tusers, 'tests' : tests}
+            # if request.user in course.users.all():
+            #     return render(request, 'testapp/course.html', ctx)
+            # else:
+            #     return HttpResponseNotFound()
         else:
-            print(7)
             return redirect('login')
 
 
@@ -181,3 +200,82 @@ class NewTestView(View):
                 is_correct=answer.get('is_correct'), quetion=q)
                 a.save()
         return HttpResponse()
+
+
+class TestView(View):
+    def get(self, request, code, id):
+        course = Course.objects.get(code=code)
+        tests = Test.objects.filter(course=course)
+        test = tests.get(id=id)
+        quetions = Quetion.objects.filter(test=test)
+        out = []
+        for quet in quetions:
+            corrects = 0
+            answers = list(Answer.objects.filter(quetion=quet))
+            for answer in answers:
+                if answer.is_correct:
+                    corrects += 1
+            if corrects > 1:
+                type = 'check'
+            else:
+                type = 'radio'
+            out.append({'quetion' : quet, 'answers' : answers, 'type' : type})
+        ctx = {'test' : test, 'quetions' : out}
+        if request.user.is_authenticated and request.user.status == 'S':
+            subs = Submition.objects.filter(test=test)
+            student = Student.objects.get(user_id=request.user)
+            try:
+                submition = subs.get(student=student)
+            except Submition.DoesNotExist:
+                submition = None
+            if not submition:
+                new_sub = Submition(submited=False,
+                    student=Student.objects.get(user_id=request.user),
+                    points=0, test=test)
+                new_sub.save()
+                
+        return render(request, 'testapp/test.html', ctx)
+
+    def post(self, request, code, id):
+        course = Course.objects.get(code=code)
+        tests = Test.objects.filter(course=course)
+        test = tests.get(id=id)
+        quetions = Quetion.objects.filter(test=test)
+        real_max = 0
+        points = 0
+        all_answers = []
+        for quetion in quetions:
+            real_max += quetion.points
+            answers = list(Answer.objects.filter(quetion=quetion)) # Надо загнать под функцию
+            corrects = 0 # Функцию добавить в funcs.py
+            for answer in answers: # функция принимает quetion (type == Quetion)
+                if answer.is_correct: # возвращает type == 'check' or type == 'radio'
+                    corrects += 1 # После этого переработать метод get()
+            if corrects > 1:
+                type = 'check'
+            else:
+                type = 'radio'
+            if type == 'radio':
+                all_answers.append(request.POST.get(str(quetion.id)))
+                if str(get_correct(quetion)) == request.POST.get(str(quetion.id)):
+                    points += quetion.points
+            elif type == 'check':
+                answers = Answer.objects.filter(quetion=quetion)
+                points_per_answer = quetion.points / len(answers)
+                for ans in answers:
+                    print(request.POST.get(str(ans.id)))
+                    if request.POST.get(str(ans.id)) and ans.is_correct:
+                        points += points_per_answer
+                        all_answers.append(str(ans.id))
+                    elif not request.POST.get(str(ans.id)) and not ans.is_correct:
+                        points += points_per_answer
+        mark = int(test.max_points*(points/real_max))
+        subs= Submition.objects.filter(test=test)
+        sub = subs.get(student=Student.objects.get(user_id=request.user))
+        sub.points = mark
+        sub.submited = True
+        for answer in all_answers:
+            sub.answers.add(Answer.objects.get(id=int(answer)))
+            print(Answer.objects.get(id=int(answer)).content)
+        sub.save()
+        return redirect('course', code)

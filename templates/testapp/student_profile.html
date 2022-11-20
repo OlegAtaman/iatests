@@ -9,7 +9,7 @@
     <h1>{{ student.group.group_code }}</h1>
     <a href="{% url 'profile_edit' %}">Редагувати профіль</a>
     <hr>
-    <a href="{% url 'add_course' %}">Доєднатися до курсу</a>
+    <a href="{% url 'join_course' %}">Доєднатися до курсу</a>
     
     <h1>Ваші курси:</h1>
     {% for course in courses %}
