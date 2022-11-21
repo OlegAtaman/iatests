@@ -12,8 +12,8 @@ FRONTEND
 - M | Timer in test [JS]
 
 BACKEND
-- M | DeleteCourseConfirmView
-- M | DeleteTestConfirmView
+- M | DeleteCourseConfirmView  # Dima
+- M | DeleteTestConfirmView # Kostya
 - H+ | Late post funtion [Threading or asynk]
 - E | Type of quetion function
 - H+ | Deadline function [Threading or asynk]
