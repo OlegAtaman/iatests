@@ -24,6 +24,7 @@
                 Перейти до виконання
                 {% else %}
                 Переглянути
+                <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
                 {% endif %}</a>
         </div>
     {% endfor %}

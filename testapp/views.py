@@ -1,7 +1,7 @@
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -279,3 +279,13 @@ class TestView(View):
             print(Answer.objects.get(id=int(answer)).content)
         sub.save()
         return redirect('course', code)
+
+
+@login_required(login_url='login')
+def testoverview(request, code, id):
+    if request.user.status == 'T':
+        test = Test.objects.get(id=id)
+        course = Course.objects.get(code=code)
+        submitions = Submition.objects.filter(test=test)
+        ctx = {'test' : test, 'subs' : submitions}
+        return render(request, 'testapp/test_overview.html', ctx)
