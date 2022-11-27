@@ -13,4 +13,5 @@ urlpatterns = [
     path('c/<code>/new_test/', views.NewTestView.as_view(), name='add_test'),
     path('c/<code>/t/<id>/', views.TestView.as_view(), name='test'),
     path('c/<code>/t/<id>/overview/', views.testoverview, name='t_overview'),
+    path('c/<code>/overview/', views.courseoverview, name='c_overview')
 ]

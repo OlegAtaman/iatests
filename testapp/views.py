@@ -1,11 +1,12 @@
 import json
 
+from math import ceil
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect, render
 from django.views import View
 
-from testapp.funcs import create_random_chars, get_correct
+from testapp.funcs import create_random_chars, get_correct, cut_by_page
 
 from .models import (Answer, Course, Group, Quetion, Student, Subject, Teacher,
                      Test, Submition)
@@ -289,3 +290,39 @@ def testoverview(request, code, id):
         submitions = Submition.objects.filter(test=test)
         ctx = {'test' : test, 'subs' : submitions}
         return render(request, 'testapp/test_overview.html', ctx)
+
+
+@login_required(login_url='login')
+def courseoverview(request, code):
+    if request.user.status != 'T':
+        return HttpResponseNotFound()
+    course = Course.objects.get(code=code)
+    tests = Test.objects.filter(course=course)
+    s_users = course.users.filter(status='S')
+    students = []
+    for s_user in s_users:
+        student = Student.objects.get(user_id=s_user)
+        students.append(student)
+    pages = ceil(len(tests)/5)
+    if request.GET.get('page'):
+        page = int(request.GET.get('page'))
+    else:
+        page = 1
+    tests = cut_by_page(tests, page)
+    out = []
+    for student in students:
+        subs = Submition.objects.filter(student=student)
+        marks = []
+        for test in tests:
+            try:
+                sub = subs.get(test=test)
+            except Submition.DoesNotExist:
+                sub = None
+            if sub:
+                mark = sub.points
+            else:
+                mark = 'N/A'
+            marks.append(mark)
+        out.append({'student' : student, 'marks' : marks})
+    ctx = {'course' : course, 'tests' : tests, 'students' : out, 'pages' : pages, 'page' : page}
+    return render(request, 'testapp/course_overview.html', ctx)

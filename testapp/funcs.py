@@ -13,3 +13,13 @@ def get_correct(quetion):
     if len(corrects)  == 1:
         return corrects[0]
     return corrects
+
+def cut_by_page(queryset, page):
+    s, e = page * 5 - 5, page * 5
+    if len(queryset) >= 5:
+        try:
+            out = queryset[s:e]
+        except IndexError:
+            out = queryset[:5]
+        return out
+    return queryset

@@ -4,6 +4,7 @@
     <p>{{ course.description }}</p>
     {% if user.status == "T" %}
     <p>Код курсу: <b>{{ course.code }}</b></p>
+    <a href="{% url 'c_overview' course.code %}">Журнал</a>
     {% endif %}
     <h3>Викладачі:</h3>
     <p>
