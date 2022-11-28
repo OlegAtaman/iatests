@@ -12,6 +12,7 @@
         {{ teacher.full_name }}<br>
     {% endfor %}
     </p>
+    <a href="{% url 'delete_course' course.id %}">Видалити курс</a><br>
     <a href="{% url 'add_test' course.code %}">Створити новий тест</a>
     <hr>
     <h1>Активні тести:</h1>
