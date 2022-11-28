@@ -104,6 +104,12 @@ class NewCourseView(View):
             return HttpResponse('Курс не знайдено')
 
 
+def delete_course(request, pk):
+    get_course = Course.objects.get(pk=pk)
+    get_course.delete()
+    return redirect('/profile')
+
+
 class SubjectAddingView(View):
     def get(self, request):
         if request.user.is_authenticated:
