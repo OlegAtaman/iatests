@@ -104,10 +104,13 @@ class NewCourseView(View):
             return HttpResponse('Курс не знайдено')
 
 
+@login_required(login_url='login')
 def delete_course(request, pk):
-    get_course = Course.objects.get(pk=pk)
-    get_course.delete()
-    return redirect('/profile')
+    course = Course.objects.get(pk=pk)
+    if request.user.status == 'T' and request.user in course.users.all().filter(status='T'):
+        course.delete()
+        return redirect('/profile')
+    return HttpResponseNotFound()
 
 
 class SubjectAddingView(View):
