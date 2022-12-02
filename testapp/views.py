@@ -196,7 +196,6 @@ class NewTestView(View):
 
     def post(self, request, code):
         args = request.POST
-        print(json.loads(request.POST.get('q')))
         t = Test(title=args.get('qname'), description=args.get('desc'),
             time_to_submit=args.get('time'), time_to_publish=args.get('pub_time'),
             max_points=args.get('m_points'), course=Course.objects.get(code=code))
