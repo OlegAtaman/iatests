@@ -40,6 +40,7 @@ $(document).ready(function(){
                 desc : $(this.parentNode).children('textarea').val(),
                 time : $(this.parentNode).children('.t_cont').children('input').val(),
                 pub_time : $(this.parentNode).children('.dt_cont').children('input').val(),
+                deadline : $(this.parentNode).children('.dt_cont2').children('input').val(),
                 m_points: $(this.parentNode).children('.m_points').children('input').val(),
                 q : JSON.stringify(quetions),
                 csrfmiddlewaretoken : csrf

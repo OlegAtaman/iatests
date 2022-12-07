@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect, render
 from django.views import View
+from django.utils import timezone
+from datetime import datetime
 
 from testapp.funcs import create_random_chars, get_correct, cut_by_page
 
@@ -105,8 +107,8 @@ class NewCourseView(View):
 
 
 @login_required(login_url='login')
-def delete_course(request, pk):
-    course = Course.objects.get(pk=pk)
+def delete_course(request, code):
+    course = Course.objects.get(code=code)
     if request.user.status == 'T' and request.user in course.users.all().filter(status='T'):
         course.delete()
         return redirect('/profile')
@@ -156,38 +158,36 @@ class JoinCourseView(View):
 
 class CourseView(View):
     def get(self, request, code):
-        if request.user.is_authenticated:
-            try:
-                course = Course.objects.get(code=code)
-                teachers = course.users.all().filter(status='T')
-                tusers = []
-                for user in teachers:
-                    tuser = Teacher.objects.get(user_id=user)
-                    tusers.append(tuser)
-                tests = Test.objects.filter(course=course)
-                ctx = {'course' : course, 'teachers' : tusers, 'tests' : tests}
-                if request.user in course.users.all():
-                    return render(request, 'testapp/course.html', ctx)
-                else:
-                    return HttpResponseNotFound()
-            except:
-                return HttpResponseNotFound()
-
-            # course = Course.objects.get(code=code)
-            # teachers = course.users.all().filter(status='T')
-            # tusers = []
-            # for user in teachers:
-            #     tuser = Teacher.objects.get(user_id=user)
-            #     tusers.append(tuser)
-            # tests = Test.objects.filter(course=course)
-            # print(tests)
-            # ctx = {'course' : course, 'teachers' : tusers, 'tests' : tests}
-            # if request.user in course.users.all():
-            #     return render(request, 'testapp/course.html', ctx)
-            # else:
-            #     return HttpResponseNotFound()
-        else:
+        if not request.user.is_authenticated:
             return redirect('login')
+        try:
+            course = Course.objects.get(code=code)
+        except Course.DoesNotExist:
+            return HttpResponseNotFound()
+        teachers = course.users.all().filter(status='T')
+        tusers = []
+        for user in teachers:
+            tuser = Teacher.objects.get(user_id=user)
+            tusers.append(tuser)
+        tests = Test.objects.filter(course=course)
+        present_tests = tests.filter(time_to_publish__lte=timezone.localtime(timezone.now()))
+        future_tests = tests.filter(time_to_publish__gte=timezone.localtime(timezone.now()))
+        past_tests = present_tests.filter(deadline__lte=timezone.localtime(timezone.now()))
+        present_tests = present_tests.filter(deadline__gte=timezone.localtime(timezone.now()))
+        comp_tests = []
+        if request.user.status == 'S':
+            all_comp = Submition.objects.filter(student=Student.objects.get(user_id=request.user))
+            for test in present_tests:
+                sub = all_comp.filter(test=test)
+                if sub:
+                    comp_tests.append(test)            
+        ctx = {'course' : course, 'teachers' : tusers, 'present' : present_tests,
+                'future' : future_tests, 'past' : past_tests, 'completed' : comp_tests}
+        if request.user in course.users.all():
+            return render(request, 'testapp/course.html', ctx)
+        else:
+            return HttpResponseNotFound()
+            
 
 
 class NewTestView(View):
@@ -198,7 +198,8 @@ class NewTestView(View):
         args = request.POST
         t = Test(title=args.get('qname'), description=args.get('desc'),
             time_to_submit=args.get('time'), time_to_publish=args.get('pub_time'),
-            max_points=args.get('m_points'), course=Course.objects.get(code=code))
+            max_points=args.get('m_points'), course=Course.objects.get(code=code),
+            deadline=args.get('deadline'))
         t.save()
         for quetion in json.loads(request.POST.get('q')):
             q = Quetion(content=quetion.get('text'),
@@ -231,18 +232,20 @@ class TestView(View):
             out.append({'quetion' : quet, 'answers' : answers, 'type' : type})
         ctx = {'test' : test, 'quetions' : out}
         if request.user.is_authenticated and request.user.status == 'S':
+            if test.time_to_publish >= timezone.localtime(timezone.now()) or test.deadline <= timezone.localtime(timezone.now()):
+                return HttpResponseNotFound()
             subs = Submition.objects.filter(test=test)
             student = Student.objects.get(user_id=request.user)
             try:
                 submition = subs.get(student=student)
+                return HttpResponseNotFound()
             except Submition.DoesNotExist:
                 submition = None
             if not submition:
                 new_sub = Submition(submited=False,
                     student=Student.objects.get(user_id=request.user),
                     points=0, test=test)
-                new_sub.save()
-                
+                new_sub.save()       
         return render(request, 'testapp/test.html', ctx)
 
     def post(self, request, code, id):

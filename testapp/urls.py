@@ -14,5 +14,5 @@ urlpatterns = [
     path('c/<code>/t/<id>/', views.TestView.as_view(), name='test'),
     path('c/<code>/t/<id>/overview/', views.testoverview, name='t_overview'),
     path('c/<code>/overview/', views.courseoverview, name='c_overview'),
-    path('delete-page/<int:pk>', views.delete_course, name='delete_course'),
+    path('c/<code>/delete/', views.delete_course, name='delete_course'),
 ]

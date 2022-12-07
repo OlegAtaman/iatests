@@ -5,7 +5,7 @@
 <h3>Максимум балів: {{ test.max_points }}</h3>
 {% if user.status == 'T' %}
 <p>На проходження: {{ test.time_to_submit }}</p>
-<p>Дедлайн: </p>
+<p>Дедлайн: {{ test.deadline }}</p>
 {% endif %}
 <hr>
 {% if user.status == 'S' %}

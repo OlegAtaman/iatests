@@ -34,7 +34,8 @@ class Test(models.Model):
     description = models.TextField()
     max_points = models.DecimalField(max_digits=10, decimal_places=0)
     time_to_submit = models.TimeField()
-    time_to_publish = models.DateTimeField(auto_now=True)
+    time_to_publish = models.DateTimeField(null=True)
+    deadline = models.DateTimeField(null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
 class Quetion(models.Model):
