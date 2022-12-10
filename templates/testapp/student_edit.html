@@ -21,7 +21,11 @@
         <input type="text" name="full_name" value="{{ student.full_name }}">
         <select name="group" id="dropdown">
             {% for group in groups %}
-                <option>{{ group.group_code }}</option>
+                {% if group == student.group %}
+                    <option selected>{{ group.group_code }}</option>
+                {% else %}
+                    <option>{{ group.group_code }}</option>
+                {% endif %}
             {% endfor %}
             <option value="add">СТВОРИТИ</option>
         </select>
