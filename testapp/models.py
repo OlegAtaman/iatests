@@ -10,7 +10,7 @@ class Teacher(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=50)
     contacts = models.CharField(max_length=100)
-    subjects = models.ManyToManyField('Subject', through='TeachersToSubjects')
+    subjects = models.ManyToManyField("Subject", through="TeachersToSubjects")
 
 
 class Student(models.Model):
@@ -21,7 +21,7 @@ class Student(models.Model):
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=50)
-    teachers = models.ManyToManyField('Teacher', through='TeachersToSubjects')
+    teachers = models.ManyToManyField("Teacher", through="TeachersToSubjects")
 
 
 class TeachersToSubjects(models.Model):

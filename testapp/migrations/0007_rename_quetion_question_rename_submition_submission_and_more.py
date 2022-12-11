@@ -6,21 +6,21 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testapp', '0006_alter_test_time_to_publish'),
+        ("testapp", "0006_alter_test_time_to_publish"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Quetion',
-            new_name='Question',
+            old_name="Quetion",
+            new_name="Question",
         ),
         migrations.RenameModel(
-            old_name='Submition',
-            new_name='Submission',
+            old_name="Submition",
+            new_name="Submission",
         ),
         migrations.RenameField(
-            model_name='submission',
-            old_name='submited',
-            new_name='submitted',
+            model_name="submission",
+            old_name="submited",
+            new_name="submitted",
         ),
     ]
