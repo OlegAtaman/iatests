@@ -1,16 +1,7 @@
 from django.contrib import admin
 
-from .models import (
-    Answer,
-    Course,
-    Group,
-    Question,
-    Student,
-    Subject,
-    Submission,
-    Teacher,
-    Test,
-)
+from .models import (Answer, Course, Group, Question, Student, Subject,
+                     Submission, Teacher, Test)
 
 
 class TestAdmin(admin.ModelAdmin):

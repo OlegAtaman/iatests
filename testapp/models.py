@@ -12,16 +12,25 @@ class Teacher(models.Model):
     contacts = models.CharField(max_length=100)
     subjects = models.ManyToManyField("Subject", through="TeachersToSubjects")
 
+    def __str__(self):
+        return f"Teacher {self.full_name}"
+
 
 class Student(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=50)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"Student {self.full_name}"
+
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=50)
     teachers = models.ManyToManyField("Teacher", through="TeachersToSubjects")
+
+    def __str__(self):
+        return self.subject_name
 
 
 class TeachersToSubjects(models.Model):
@@ -35,6 +44,9 @@ class Course(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
 
+    def __str__(self):
+        return self.title
+
 
 class Test(models.Model):
     title = models.CharField(max_length=50)
@@ -45,17 +57,26 @@ class Test(models.Model):
     deadline = models.DateTimeField(null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Question(models.Model):
     content = models.CharField(max_length=150)
     points = models.DecimalField(max_digits=10, decimal_places=2)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.content
+
 
 class Answer(models.Model):
     content = models.CharField(max_length=150)
     is_correct = models.BooleanField()
-    quetion = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
 
 
 class Submission(models.Model):
@@ -64,3 +85,6 @@ class Submission(models.Model):
     points = models.DecimalField(max_digits=10, decimal_places=0)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     answers = models.ManyToManyField(Answer)
+
+    def __str__(self):
+        return f"Submission to {self.test} by {self.student}"

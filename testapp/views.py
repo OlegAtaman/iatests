@@ -4,27 +4,17 @@ from math import ceil  # Для округлення вгору
 
 from django.contrib.auth.decorators import login_required
 from django.http import (  # Для повернення простого респонзу та помилки 404
-    HttpResponse,
-    HttpResponseNotFound,
-)
+    HttpResponse, HttpResponseNotFound)
 from django.shortcuts import redirect, render
-from django.utils import timezone  # Пакет інструментів для роботи з нашою таймзоною
+from django.utils import \
+    timezone  # Пакет інструментів для роботи з нашою таймзоною
 from django.views import View
 
 # Функція для генерації коду курсу, отримання правильної відповіді на питання, розбивання пачки тестів на сторінки
 from testapp.funcs import create_random_chars, cut_by_page, get_correct
 
-from .models import (
-    Answer,
-    Course,
-    Group,
-    Question,
-    Student,
-    Subject,
-    Submission,
-    Teacher,
-    Test,
-)
+from .models import (Answer, Course, Group, Question, Student, Subject,
+                     Submission, Teacher, Test)
 
 
 @login_required(login_url="login")
