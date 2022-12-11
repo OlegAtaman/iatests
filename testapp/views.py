@@ -11,8 +11,8 @@ from datetime import datetime
 # Функція для генерації коду курсу, отримання правильної відповіді на питання, розбивання пачки тестів на сторінки
 from testapp.funcs import create_random_chars, get_correct, cut_by_page 
 
-from .models import (Answer, Course, Group, Quetion, Student, Subject, Teacher,
-                     Test, Submition)
+from .models import (Answer, Course, Group, Question, Student, Subject, Teacher,
+                     Test, Submission)
 
 
 @login_required(login_url='login')
@@ -180,7 +180,7 @@ class CourseView(View):
         present_tests = present_tests.filter(deadline__gte=timezone.localtime(timezone.now()))
         comp_tests = []
         if request.user.status == 'S':
-            all_comp = Submition.objects.filter(student=Student.objects.get(user_id=request.user))
+            all_comp = Submission.objects.filter(student=Student.objects.get(user_id=request.user))
             for test in present_tests:
                 sub = all_comp.filter(test=test)
                 if sub:
@@ -203,8 +203,8 @@ class NewTestView(View):
             deadline=args.get('deadline')) # Отримуємо купу даних з полів та створюємо об'єкти тесту
         t.save()
         for quetion in json.loads(request.POST.get('q')): # Та об'єкти питань та відповідей
-            q = Quetion(content=quetion.get('text'),
-            points=quetion.get('points'), test=t)
+            q = Question(content=quetion.get('text'),
+                         points=quetion.get('points'), test=t)
             q.save()
             for answer in quetion.get('ans'):
                 a = Answer(content=answer.get('text'),
@@ -219,7 +219,7 @@ class TestView(View):
             return HttpResponseNotFound()
         course = Course.objects.get(code=code) # Нам по суті це не треба, але якщо беремо код, то чого б не знайти курс, лол
         test = Test.objects.get(id=id) # Знаходимо всі тести курсу
-        quetions = Quetion.objects.filter(test=test) # Знаходимо питання
+        quetions = Question.objects.filter(test=test) # Знаходимо питання
         out = []
         # Для кожного питання визначаємо тип: радіо чи чекбокс (1 чи декілька відповідей)
         # Засовуємо це все в аутпут
@@ -239,23 +239,23 @@ class TestView(View):
         if request.user.status == 'S': # Якщо наш користувач - студент
             if test.time_to_publish >= timezone.localtime(timezone.now()) or test.deadline <= timezone.localtime(timezone.now()): 
                 return HttpResponseNotFound() # Якщо тест прострочений чи ще не опублікований - викидаємо 404
-            subs = Submition.objects.filter(test=test) 
+            subs = Submission.objects.filter(test=test)
             student = Student.objects.get(user_id=request.user) # Знаходимо об'єкт студента
             try:
                 submition = subs.get(student=student)
                 return HttpResponseNotFound()
-            except Submition.DoesNotExist:
+            except Submission.DoesNotExist:
                 pass
-            new_sub = Submition(submited=False,
-                student=Student.objects.get(user_id=request.user),
-                points=0, test=test)
+            new_sub = Submission(submited=False,
+                                 student=Student.objects.get(user_id=request.user),
+                                 points=0, test=test)
             new_sub.save() # Створюємо нове проходження одразу як користувач зайшов на сторінку. Вийде не завершивши - його проблеми
         return render(request, 'testapp/test.html', ctx)
 
     def post(self, request, code, id):
         course = Course.objects.get(code=code)
         test = Test.objects.get(id=id)
-        quetions = Quetion.objects.filter(test=test)
+        quetions = Question.objects.filter(test=test)
         real_max = 0 # Сума максимальних балів за кожне питання
         points = 0 # Набрані бали
         all_answers = [] # ІД відповідей, для подальшого зберігання в базу
@@ -287,10 +287,10 @@ class TestView(View):
                     elif not request.POST.get(str(ans.id)) and not ans.is_correct:
                         points += points_per_answer
         mark = int(test.max_points*(points/real_max)) # Вираховуємо реальну оцінку, за даною шкалою
-        subs = Submition.objects.filter(test=test)
+        subs = Submission.objects.filter(test=test)
         sub = subs.get(student=Student.objects.get(user_id=request.user))
         sub.points = mark
-        sub.submited = True
+        sub.submitted = True
         for answer in all_answers: # Зберігаємо у базу питання, на які відповів наш студент
             sub.answers.add(Answer.objects.get(id=int(answer)))
             print(Answer.objects.get(id=int(answer)).content)
@@ -303,7 +303,7 @@ class TestView(View):
 def testoverview(request, code, id):
     if request.user.status == 'T':
         test = Test.objects.get(id=id)
-        submitions = Submition.objects.filter(test=test)
+        submitions = Submission.objects.filter(test=test)
         ctx = {'test' : test, 'subs' : submitions}
         return render(request, 'testapp/test_overview.html', ctx) # Знаходимо тест, всі проходження та будуємо таблицю в хтмл
     else:
@@ -313,9 +313,9 @@ def testoverview(request, code, id):
 @login_required(login_url='login')
 def answersoveriew(request, id):
     if request.user.status == 'T':
-        sub = Submition.objects.get(id=id)
+        sub = Submission.objects.get(id=id)
         test = sub.test
-        questions = Quetion.objects.filter(test=test)
+        questions = Question.objects.filter(test=test)
         ques_pack = []
         for question in questions:
             ans = []
@@ -353,12 +353,12 @@ def courseoverview(request, code):
     out = [] # Створюємо масив зі словниками для кожного студенту
     # У словниках є об'єкт студента та його оцінки для даних тестів
     for student in students:
-        subs = Submition.objects.filter(student=student)
+        subs = Submission.objects.filter(student=student)
         marks = []
         for test in tests:
             try:
                 sub = subs.get(test=test)
-            except Submition.DoesNotExist:
+            except Submission.DoesNotExist:
                 sub = None
             if sub:
                 mark = sub.points
