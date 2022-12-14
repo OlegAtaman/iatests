@@ -15,4 +15,5 @@ urlpatterns = [
     path('c/<code>/t/<id>/overview/', views.testoverview, name='t_overview'),
     path('c/<code>/overview/', views.courseoverview, name='c_overview'),
     path('c/<code>/delete/', views.delete_course, name='delete_course'),
+    path('c/<code>/<id>/delete/', views.delete_test, name='delete_test'),
 ]

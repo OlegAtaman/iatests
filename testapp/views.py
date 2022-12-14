@@ -116,6 +116,14 @@ def delete_course(request, code):
         return redirect('profile')
     return HttpResponseNotFound()
 
+def delete_test(request, code, id):
+    course = Course.objects.get(code=code) # Отримуємо курс за кодом
+    test=Test.objects.get(id=id) # Отримуємо тест за id
+    if request.user.status == 'T' and request.user in course.users.all().filter(status='T'): # Видаляємо, якщо це робить вчитель цього курсу
+        test.delete()
+        return redirect('course', code=code)
+    return HttpResponseNotFound()
+
 
 class SubjectAddingView(View):
     def get(self, request):
