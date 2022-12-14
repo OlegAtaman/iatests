@@ -116,6 +116,7 @@ def delete_course(request, code):
         return redirect('profile')
     return HttpResponseNotFound()
 
+@login_required(login_url='login')
 def delete_test(request, code, id):
     course = Course.objects.get(code=code) # Отримуємо курс за кодом
     test=Test.objects.get(id=id) # Отримуємо тест за id
