@@ -22,9 +22,9 @@
         <select name="group" id="dropdown">
             {% for group in groups %}
                 {% if group == student.group %}
-                    <option selected>{{ group.group_code }}</option>
+                    <option selected>{{ group.code }}</option>
                 {% else %}
-                    <option>{{ group.group_code }}</option>
+                    <option>{{ group.code }}</option>
                 {% endif %}
             {% endfor %}
             <option value="add">СТВОРИТИ</option>

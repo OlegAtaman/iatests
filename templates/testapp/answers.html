@@ -2,8 +2,7 @@
 {% block content %}
 {% for question_answer in questions %}
     {{ question_answer }}<br>
-    {{ answered }}<br>
-
+    {{ submission.answers }}<br>
 {% endfor %}
 
 {% endblock %}

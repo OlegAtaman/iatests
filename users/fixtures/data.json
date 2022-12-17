@@ -1,0 +1,56 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "username": "vencedor",
+      "full_name": "Speransky Victor",
+      "status": "T"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "username": "skiplessons",
+      "full_name": "Fomin Oleksandr",
+      "status": "T"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "username": "fullmarks",
+      "full_name": "Krapiva Natalia",
+      "status": "T"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "username": "fairlyeven",
+      "full_name": "Zagarevsky Oleksandr",
+      "status": "S"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "username": "kira008",
+      "full_name": "Yakubchinsky Kirill",
+      "status": "S"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "username": "tiredboo",
+      "full_name": "Gerus Anna",
+      "status": "S"
+    }
+  }
+]

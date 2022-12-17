@@ -302,7 +302,7 @@ class TestView(View):
             out.append({"quetion": quet, "answers": answers, "type": type})
         ctx = {"test": test, "quetions": out}
         if request.user.status == "S":  # Якщо наш користувач - студент
-            if test.time_to_publish >= timezone.localtime(
+            if test.published >= timezone.localtime(
                 timezone.now()
             ) or test.deadline <= timezone.localtime(timezone.now()):
                 return (
@@ -392,30 +392,28 @@ def testoverview(request, code, id):
 
 
 @login_required(login_url="login")
-def answersoveriew(request, id):
+def answers_overview(request, id):
     if request.user.status == "T":
-        sub = Submission.objects.get(id=id)
-        test = sub.test
-        questions = Question.objects.filter(test=test)
+        submission = Submission.objects.get(id=id)
+        questions = Question.objects.filter(test=submission.test)
         ques_pack = []
         for question in questions:
             ans = []
-            answers = Answer.objects.filter(quetion=question)
+            answers = Answer.objects.filter(question=question)
             for answer in answers:
                 ans.append(answer.content)
             ques_pack.append({"question": question.content, "answers": ans})
-        ctx = {
-            "submition": sub,
+        context = {
+            "submission": submission,
             "questions": ques_pack,
-            "answered": sub.answers,
         }
-        return render(request, "testapp/answers.html", ctx)
+        return render(request, "testapp/answers.html", context)
     else:
         return HttpResponseNotFound()
 
 
 @login_required(login_url="login")
-def courseoverview(request, code):
+def course_overview(request, code):
     if request.user.status != "T":  # Студентів не пропустимо!
         return HttpResponseNotFound()
     course = Course.objects.get(code=code)

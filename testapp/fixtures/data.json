@@ -1,0 +1,89 @@
+[
+  {
+    "model": "testapp.subject",
+    "pk": 1,
+    "fields": {
+      "name": "Programming"
+    }
+  },
+  {
+    "model": "testapp.subject",
+    "pk": 2,
+    "fields": {
+      "name": "Physics"
+    }
+  },
+  {
+    "model": "testapp.subject",
+    "pk": 3,
+    "fields": {
+      "name": "Chemistry"
+    }
+  },
+  {
+    "model": "testapp.group",
+    "pk": 1,
+    "fields": {
+      "code": "AI101"
+    }
+  },
+  {
+    "model": "testapp.group",
+    "pk": 2,
+    "fields": {
+      "code": "KD202"
+    }
+  },
+  {
+    "model": "testapp.group",
+    "pk": 3,
+    "fields": {
+      "code": "EPO1"
+    }
+  },
+  {
+    "model": "testapp.teacher",
+    "pk": 1,
+    "fields": {
+      "user": 1
+    }
+  },
+  {
+    "model": "testapp.teacher",
+    "pk": 2,
+    "fields": {
+      "user": 2
+    }
+  },
+  {
+    "model": "testapp.teacher",
+    "pk": 3,
+    "fields": {
+      "user": 3
+    }
+  },
+  {
+    "model": "testapp.student",
+    "pk": 1,
+    "fields": {
+      "user": 4,
+      "group": 1
+    }
+  },
+  {
+    "model": "testapp.student",
+    "pk": 2,
+    "fields": {
+      "user": 5,
+      "group": 1
+    }
+  },
+  {
+    "model": "testapp.student",
+    "pk": 3,
+    "fields": {
+      "user": 6,
+      "group": 1
+    }
+  }
+]

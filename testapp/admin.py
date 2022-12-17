@@ -5,7 +5,7 @@ from .models import (Answer, Course, Group, Question, Student, Subject,
 
 
 class TestAdmin(admin.ModelAdmin):
-    readonly_fields = ("time_to_publish",)
+    readonly_fields = ("duration",)
 
 
 admin.site.register(Test, TestAdmin)

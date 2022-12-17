@@ -10,9 +10,9 @@
     <select name="subjects" id="dropdown" multiple>
         {% for subject in subjects %}
             {% if subject in sel_subjects %}
-                <option selected>{{ subject.subject_name }}</option>
+                <option selected>{{ subject.name }}</option>
             {% else %}
-                <option>{{ subject.subject_name }}</option>
+                <option>{{ subject.name }}</option>
             {% endif %}
         {% endfor %}
     </select></p><br>

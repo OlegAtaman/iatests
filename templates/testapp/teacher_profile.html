@@ -9,7 +9,7 @@
     <p>{{ teacher.contacts }}</p>
     <p>Ви викладаєте:</p>
     {% for subject in subjects %}
-    <h4>{{ subject.subject_name }}</h4>
+    <h4>{{ subject.name }}</h4>
     {% endfor %}
     <a href="{% url 'profile_edit' %}">Редагувати профіль</a>
     <hr>

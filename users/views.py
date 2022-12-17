@@ -8,7 +8,6 @@ from .forms import UserCreationForm
 
 
 class RegisterView(View):
-
     template_name = "registration/registration.html"
 
     def get(self, request):
