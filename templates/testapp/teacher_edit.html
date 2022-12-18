@@ -1,23 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
     <form method="post">
-    {% csrf_token %}
-    <p>Ваше повне ім'я:
-    <input type="text" name="full_name" value="{{ teacher.full_name }}"></p>
-    <p>Ваші контактні дані:
-    <input type="text" name="contacts" value="{{ teacher.contacts }}"></p>
-    <p>Предмети, які ви викладаєте:
-    <select name="subjects" id="dropdown" multiple>
-        {% for subject in subjects %}
-            {% if subject in sel_subjects %}
-                <option selected>{{ subject.subject_name }}</option>
-            {% else %}
-                <option>{{ subject.subject_name }}</option>
-            {% endif %}
-        {% endfor %}
-    </select></p><br>
-    <a href="{% url 'add_subject' %}">Немає шуканого пердмету?</a>
-    <p></p>
-    <input type="submit">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
     </form>
 {% endblock %}

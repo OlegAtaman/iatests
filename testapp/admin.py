@@ -1,8 +1,12 @@
 from django.contrib import admin
-from .models import Teacher, Student, Subject, Group, Submition, Course, Test, Quetion, Answer
+
+from .models import (Answer, Course, Group, Question, Student, Subject,
+                     Submission, Teacher, Test)
+
 
 class TestAdmin(admin.ModelAdmin):
-    readonly_fields = ('time_to_publish',)
+    readonly_fields = ("duration",)
+
 
 admin.site.register(Test, TestAdmin)
 
@@ -11,6 +15,6 @@ admin.site.register(Student)
 admin.site.register(Subject)
 admin.site.register(Group)
 admin.site.register(Course)
-admin.site.register(Quetion)
+admin.site.register(Question)
 admin.site.register(Answer)
-admin.site.register(Submition)
+admin.site.register(Submission)
