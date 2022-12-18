@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for question_answer in submission.answers.get_queryset %}
+        {{ question_answer.question }}: {{ question_answer.content }}
+        <br>
+    {% endfor %}
+
+{% endblock %}

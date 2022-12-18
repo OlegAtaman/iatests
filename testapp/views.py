@@ -1,112 +1,115 @@
 import json
-from datetime import datetime
-from math import ceil  # Для округлення вгору
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import (  # Для повернення простого респонзу та помилки 404
     HttpResponse, HttpResponseNotFound)
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.utils import \
     timezone  # Пакет інструментів для роботи з нашою таймзоною
 from django.views import View
+from django.views.generic import DetailView, UpdateView
 
 # Функція для генерації коду курсу, отримання правильної відповіді на питання, розбивання пачки тестів на сторінки
-from testapp.funcs import create_random_chars, cut_by_page, get_correct
-
-from .models import (Answer, Course, Group, Question, Student, Subject,
+from testapp.funcs import create_random_chars, get_correct
+from .forms import TeacherModelForm, StudentModelForm
+from .models import (Answer, Course, Question, Student, Subject,
                      Submission, Teacher, Test)
 
 
-@login_required(login_url="login")
-def profile_view(request):
-    current_teacher = Teacher.objects.all().filter(
-        user_id=request.user
-    )  # Пробуємо знайти об'єкт вчителя з user_id == request.user
-    if current_teacher:  # Якщо знайшли
-        subjects = current_teacher[
-            0
-        ].subjects.all()  # Отримуємо всі предмети, які викладає вчитель
-        courses = Course.objects.filter(
-            users__in=[request.user]
-        )  # Всі курси, які він веде
-        ctx = {"teacher": current_teacher[0], "subjects": subjects, "courses": courses}
-        return render(request, "testapp/teacher_profile.html", ctx)
-    else:  # Інакше перед нами студент
-        current_student = Student.objects.get(
-            user_id=request.user
-        )  # Отримуємо відповідний об'єкт
-        courses = Course.objects.filter(
-            users__in=[request.user]
-        )  # Та всі курси, на яких він вчиться
-        ctx = {"student": current_student, "courses": courses}
-        return render(request, "testapp/student_profile.html", ctx)
+# @login_required(login_url="login")
+# def profile_view(request):
+#     current_teacher = Teacher.objects.all().filter(
+#         user_id=request.user
+#     )  # Пробуємо знайти об'єкт вчителя з user_id == request.user
+#     if current_teacher:  # Якщо знайшли
+#         subjects = current_teacher[
+#             0
+#         ].subjects.all()  # Отримуємо всі предмети, які викладає вчитель
+#         courses = Course.objects.filter(
+#             users__in=[request.user]
+#         )  # Всі курси, які він веде
+#         ctx = {"teacher": current_teacher[0], "subjects": subjects, "courses": courses}
+#         return render(request, "testapp/teacher_detail.html", ctx)
+#     else:  # Інакше перед нами студент
+#         current_student = Student.objects.get(
+#             user_id=request.user
+#         )  # Отримуємо відповідний об'єкт
+#         courses = Course.objects.filter(
+#             users__in=[request.user]
+#         )  # Та всі курси, на яких він вчиться
+#         ctx = {"student": current_student, "courses": courses}
+#         return render(request, "testapp/student_detail.html", ctx)
+#
 
 
-class ProfileEditView(View):
-    def get(self, request):
-        if not request.user.is_authenticated:
-            return redirect(
-                "login"
-            )  # Якщо юзер не ввійшов в акаунт - відправляємо логінитися
-        if request.user.status == "T":
-            # Якщо вчитель, отримуємо перелік предметів (subjects) та обраних за замовчуванням предметів (sel_subjects)
-            current_teacher = Teacher.objects.get(user_id=request.user)
-            subjects = Subject.objects.all()
-            sel_subjects = Subject.objects.filter(teachers__in=[current_teacher])
-            ctx = {
-                "teacher": current_teacher,
-                "subjects": subjects,
-                "sel_subjects": sel_subjects,
-            }
-            return render(request, "testapp/teacher_edit.html", ctx)
-        else:
-            # Студенту - пакуємо перелік груп
-            current_student = Student.objects.get(user_id=request.user)
-            groups = Group.objects.all()
-            ctx = {"student": current_student, "groups": groups}
-            return render(request, "testapp/student_edit.html", ctx)
-
-    def post(self, request):
-        # Збираємо аргументи з посту та переписуємо всі поля об'єкту вчителя чи студента
-        # При початковому рендерингу сторінки в методі get(), ми заповнюємо поля дефолтними значеннями,
-        # тож навіть якщо користувач їх не змінював - дані збережуться коректно
-        if request.user.status == "T":
-            args = request.POST
-            name = args.get("full_name")
-            contacts = args.get("contacts")
-            subjects = args.getlist("subjects")
-            teacher = Teacher.objects.get(user_id=request.user)
-            teacher.subjects.clear()
-            for subject in subjects:
-                sub_obj = Subject.objects.get(subject_name=subject)
-                teacher.subjects.add(sub_obj)
-            teacher.full_name = name
-            teacher.contacts = contacts
-            teacher.save()
-        else:
-            args = request.POST
-            name = args.get("full_name")
-            if args.get("group") == "add":
-                try:
-                    group = Group.objects.get(group_code=args.get("n_group"))
-                except:
-                    group = Group(group_code=args.get("n_group"))
-                    group.save()
-            else:
-                group = Group.objects.get(group_code=args.get("group"))
-            student = Student.objects.get(user_id=request.user)
-            student.full_name = name
-            student.group = group
-            student.save()
-        return redirect("profile")
-
+#
+# class ProfileEditView(View):
+#     def get(self, request):
+#         if not request.user.is_authenticated:
+#             return redirect(
+#                 "login"
+#             )  # Якщо юзер не ввійшов в акаунт - відправляємо логінитися
+#         if request.user.is_teacher:
+#             # Якщо вчитель, отримуємо перелік предметів (subjects) та обраних за замовчуванням предметів (sel_subjects)
+#             current_teacher = Teacher.objects.get(user_id=request.user)
+#             subjects = Subject.objects.all()
+#             sel_subjects = Subject.objects.filter(teachers__in=[current_teacher])
+#             ctx = {
+#                 "teacher": current_teacher,
+#                 "subjects": subjects,
+#                 "sel_subjects": sel_subjects,
+#             }
+#             return render(request, "testapp/teacher_edit.html", ctx)
+#         else:
+#             # Студенту - пакуємо перелік груп
+#             current_student = Student.objects.get(user_id=request.user)
+#             groups = Group.objects.all()
+#             ctx = {"student": current_student, "groups": groups}
+#             return render(request, "testapp/student_edit.html", ctx)
+#
+#     def post(self, request):
+#         # Збираємо аргументи з посту та переписуємо всі поля об'єкту вчителя чи студента
+#         # При початковому рендерингу сторінки в методі get(), ми заповнюємо поля дефолтними значеннями,
+#         # тож навіть якщо користувач їх не змінював - дані збережуться коректно
+#         if request.user.status == "T":
+#             args = request.POST
+#             name = args.get("full_name")
+#             contacts = args.get("contacts")
+#             subjects = args.getlist("subjects")
+#             teacher = Teacher.objects.get(user_id=request.user)
+#             teacher.subjects.clear()
+#             for subject in subjects:
+#                 sub_obj = Subject.objects.get(subject_name=subject)
+#                 teacher.subjects.add(sub_obj)
+#             teacher.full_name = name
+#             teacher.contacts = contacts
+#             teacher.save()
+#         else:
+#             args = request.POST
+#             name = args.get("full_name")
+#             if args.get("group") == "add":
+#                 try:
+#                     group = Group.objects.get(group_code=args.get("n_group"))
+#                 except:
+#                     group = Group(group_code=args.get("n_group"))
+#                     group.save()
+#             else:
+#                 group = Group.objects.get(group_code=args.get("group"))
+#             student = Student.objects.get(user_id=request.user)
+#             student.full_name = name
+#             student.group = group
+#             student.save()
+#         return redirect("profile")
+#
 
 class NewCourseView(View):
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect("login")
         if (
-            request.user.status != "T"
+                request.user.status != "T"
         ):  # Якщо юзер не вчитель - не пускаємо на сторінку створення курсу
             return HttpResponseNotFound()
         return render(request, "testapp/new_course.html")
@@ -129,8 +132,8 @@ class NewCourseView(View):
 @login_required(login_url="login")
 def delete_course(request, code):
     course = Course.objects.get(code=code)  # Отримуємо курс за кодом
-    if request.user.status == "T" and request.user in course.users.all().filter(
-        status="T"
+    if request.user.is_teacher and request.user in course.users.all().filter(
+            status="T"
     ):  # Видаляємо, якщо це робить вчитель цього курсу
         course.delete()
         return redirect("profile")
@@ -258,7 +261,7 @@ class NewTestView(View):
         )  # Отримуємо купу даних з полів та створюємо об'єкти тесту
         t.save()
         for quetion in json.loads(
-            request.POST.get("q")
+                request.POST.get("q")
         ):  # Та об'єкти питань та відповідей
             q = Question(
                 content=quetion.get("text"), points=quetion.get("points"), test=t
@@ -303,7 +306,7 @@ class TestView(View):
         ctx = {"test": test, "quetions": out}
         if request.user.status == "S":  # Якщо наш користувач - студент
             if test.published >= timezone.localtime(
-                timezone.now()
+                    timezone.now()
             ) or test.deadline <= timezone.localtime(timezone.now()):
                 return (
                     HttpResponseNotFound()
@@ -370,7 +373,7 @@ class TestView(View):
         sub.points = mark
         sub.submitted = True
         for (
-            answer
+                answer
         ) in all_answers:  # Зберігаємо у базу питання, на які відповів наш студент
             sub.answers.add(Answer.objects.get(id=int(answer)))
             print(Answer.objects.get(id=int(answer)).content)
@@ -380,7 +383,7 @@ class TestView(View):
 
 @login_required(login_url="login")
 def testoverview(request, code, id):
-    if request.user.status == "T":
+    if request.user.is_teacher:
         test = Test.objects.get(id=id)
         submitions = Submission.objects.filter(test=test)
         ctx = {"test": test, "subs": submitions}
@@ -391,68 +394,104 @@ def testoverview(request, code, id):
         return HttpResponseNotFound()  # А якщо зайшов студент - виганяємо його
 
 
-@login_required(login_url="login")
-def answers_overview(request, id):
-    if request.user.status == "T":
-        submission = Submission.objects.get(id=id)
-        questions = Question.objects.filter(test=submission.test)
-        ques_pack = []
-        for question in questions:
-            ans = []
-            answers = Answer.objects.filter(question=question)
-            for answer in answers:
-                ans.append(answer.content)
-            ques_pack.append({"question": question.content, "answers": ans})
-        context = {
-            "submission": submission,
-            "questions": ques_pack,
-        }
-        return render(request, "testapp/answers.html", context)
-    else:
-        return HttpResponseNotFound()
+# @login_required(login_url="login")
+# def answers_overview(request, id):
+#     if request.user.status == "T":
+#         submission = Submission.objects.get(id=id)
+#         questions = Question.objects.filter(test=submission.test)
+#         ques_pack = []
+#         for question in questions:
+#             ans = []
+#             answers = Answer.objects.filter(question=question)
+#             for answer in answers:
+#                 ans.append(answer.content)
+#             ques_pack.append({"question": question.content, "answers": ans})
+#         context = {
+#             "submission": submission,
+#             "questions": ques_pack,
+#         }
+#         return render(request, "testapp/submission_detail.html", context)
+#     else:
+#         return HttpResponseNotFound()
+
+# @login_required()
+# def course_overview(request, code):
+#     if request.user.status != "T":  # Студентів не пропустимо!
+#         return HttpResponseNotFound()
+#     course = Course.objects.get(code=code)
+#     tests = Test.objects.filter(course=course)
+#     s_users = course.users.filter(status="S")  # Збираємо кверісет студентів цього курсу
+#     students = []  # Та будуємо масив відповідних об'єктів моделі студент
+#     for s_user in s_users:
+#         student = Student.objects.get(user_id=s_user)
+#         students.append(student)
+#     pages = ceil(len(tests) / 5)  # Вираховуємо кількість сторінок
+#     # Якщо є ГЕТ-аргумент "сторінка" - то використовуємо її, інакше - переходимо на першу
+#     if request.GET.get("page"):
+#         page = int(request.GET.get("page"))
+#     else:
+#         page = 1
+#     tests = cut_by_page(
+#         tests, page
+#     )  # Вирізаємо шматочок кверісету тестів за нашою сторінкою
+#     out = []  # Створюємо масив зі словниками для кожного студенту
+#     # У словниках є об'єкт студента та його оцінки для даних тестів
+#     for student in students:
+#         subs = Submission.objects.filter(student=student)
+#         marks = []
+#         for test in tests:
+#             try:
+#                 sub = subs.get(test=test)
+#             except Submission.DoesNotExist:
+#                 sub = None
+#             if sub:
+#                 mark = sub.points
+#             else:
+#                 mark = "N/A"
+#             marks.append(mark)
+#         out.append({"student": student, "marks": marks})
+#     ctx = {
+#         "course": course,
+#         "tests": tests,
+#         "students": out,
+#         "pages": pages,
+#         "page": page,
+#     }
+#     return render(request, "testapp/course_detail.html", ctx)
+class TeacherProfileDetailView(LoginRequiredMixin, DetailView):
+    model = Teacher
 
 
-@login_required(login_url="login")
-def course_overview(request, code):
-    if request.user.status != "T":  # Студентів не пропустимо!
-        return HttpResponseNotFound()
-    course = Course.objects.get(code=code)
-    tests = Test.objects.filter(course=course)
-    s_users = course.users.filter(status="S")  # Збираємо кверісет студентів цього курсу
-    students = []  # Та будуємо масив відповідних об'єктів моделі студент
-    for s_user in s_users:
-        student = Student.objects.get(user_id=s_user)
-        students.append(student)
-    pages = ceil(len(tests) / 5)  # Вираховуємо кількість сторінок
-    # Якщо є ГЕТ-аргумент "сторінка" - то використовуємо її, інакше - переходимо на першу
-    if request.GET.get("page"):
-        page = int(request.GET.get("page"))
-    else:
-        page = 1
-    tests = cut_by_page(
-        tests, page
-    )  # Вирізаємо шматочок кверісету тестів за нашою сторінкою
-    out = []  # Створюємо масив зі словниками для кожного студенту
-    # У словниках є об'єкт студента та його оцінки для даних тестів
-    for student in students:
-        subs = Submission.objects.filter(student=student)
-        marks = []
-        for test in tests:
-            try:
-                sub = subs.get(test=test)
-            except Submission.DoesNotExist:
-                sub = None
-            if sub:
-                mark = sub.points
-            else:
-                mark = "N/A"
-            marks.append(mark)
-        out.append({"student": student, "marks": marks})
-    ctx = {
-        "course": course,
-        "tests": tests,
-        "students": out,
-        "pages": pages,
-        "page": page,
-    }
-    return render(request, "testapp/course_overview.html", ctx)
+class TeacherProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Teacher
+    form_class = TeacherModelForm
+    template_name = "testapp/teacher_edit.html"
+
+    def get_success_url(self):
+        url = reverse_lazy("teacher-profile", kwargs={'pk': self.request.user.teacher.pk})
+        return url
+
+
+class StudentProfileDetailView(LoginRequiredMixin, DetailView):
+    model = Student
+
+
+class StudentProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Student
+    form_class = StudentModelForm
+    template_name = "testapp/student_edit.html"
+
+    def get_success_url(self):
+        url = reverse_lazy("student-profile", kwargs={'pk': self.request.user.student.pk})
+        return url
+
+
+class CourseDetailView(LoginRequiredMixin, DetailView):
+    model = Course
+
+
+class SubmissionDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    model = Submission
+
+    def has_permission(self):
+        return self.request.user.is_teacher

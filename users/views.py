@@ -21,21 +21,22 @@ class RegisterView(View):
             form.save()
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password1")
-            status = form.cleaned_data.get("status")
+            is_teacher = form.cleaned_data.get("is_teacher")
             user = authenticate(username=username, password=password)
             login(request, user)
-            if status == "T":
+            if is_teacher:
                 teacher = Teacher(
-                    user_id=user, full_name="Ваше ім'я", contacts="Ваші контакти."
+                    user=user
                 )
                 teacher.save()
+                return redirect(f"/teacher/{teacher.pk}/edit")
             else:
-                empty_group = Group.objects.get(group_code="Немає")
                 student = Student(
-                    user_id=user, full_name="Ваше ім'я", group=empty_group
+                    user=user
                 )
                 student.save()
-            return redirect("profile_edit")
+                return redirect(f"/student/{student.pk}/edit")
+
 
         ctx = {"form": form}
         return render(request, self.template_name, ctx)

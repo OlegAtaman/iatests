@@ -13,6 +13,26 @@ class Group(models.Model):
         return self.code
 
 
+class Teacher(models.Model):
+    """
+    A professor teaching a class.
+    """
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=50, null=True)
+    contacts = models.CharField(max_length=100, blank=True)
+
+
+class Student(models.Model):
+    """
+    A student taking a class.
+    """
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=50, null=True)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
+
+
 class Subject(models.Model):
     """
     Study subject.
@@ -31,29 +51,12 @@ class Course(models.Model):
 
     title = models.CharField(max_length=50)
     description = models.TextField(blank=True)
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    students = models.ManyToManyField(Student)
+    teachers = models.ManyToManyField(Teacher)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
-
-
-class Teacher(models.Model):
-    """
-    A professor teaching a class.
-    """
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    contacts = models.CharField(max_length=100, blank=True)
-
-
-class Student(models.Model):
-    """
-    A student taking a class.
-    """
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
 
 
 class Test(models.Model):
