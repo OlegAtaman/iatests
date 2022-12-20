@@ -27,6 +27,7 @@
             <p>Дата та час публікації: {{ test.time_to_publish }}</p>
             <p>Дедлайн: {{ test.deadline }}</p>
             <a href="{% url 'test' course.code test.id %}">Переглянути</a>
+            <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
             </div>
         {% endfor %}
     {% endif %}
@@ -48,6 +49,7 @@
                 {% else %}
                 <a href="{% url 'test' course.code test.id %}">Переглянути</a>
                 <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
+                <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
                 {% endif %}
         </div>
     {% endfor %}
@@ -61,6 +63,7 @@
             {% if user.status == 'T' %}
             <a href="{% url 'test' course.code test.id %}">Переглянути</a>
             <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
+            <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
             {% endif %}
             </div>
         {% endfor %}
