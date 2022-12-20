@@ -319,27 +319,6 @@ def testoverview(request, code, id):
         return HttpResponseNotFound() # А якщо зайшов студент - виганяємо його
 
 
-@login_required(login_url='login')
-def answersoveriew(request, id):
-    if request.user.status == 'T':
-        sub = Submition.objects.get(id=id)
-        test = sub.test
-        questions = Quetion.objects.filter(test=test)
-        ques_pack = []
-        for question in questions:
-            ans = []
-            answers = Answer.objects.filter(quetion=question)
-            for answer in answers:
-                ans.append(answer.content)
-            ques_pack.append({"question": question.content, "answers": ans})
-        ctx = {"submition": sub,
-            "questions": ques_pack,
-            "answered": sub.answers,
-        }
-        return render(request, 'testapp/answers.html', ctx)
-    else:
-        return HttpResponseNotFound()
-
 
 @login_required(login_url='login')
 def courseoverview(request, code):
