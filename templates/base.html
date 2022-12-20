@@ -9,12 +9,7 @@
         <li><a href="{% url 'main' %}">IATESTS</a></li>
         {% if user.is_authenticated %}
         {% block auth_link %}
-{#        <li><a href="{% url 'profile' %}">Профіль</a></li>#}
-            {% if user.is_teacher %}
-                <li><a href="{% url 'teacher-profile' user.teacher.pk %}">Профіль</a></li>
-            {% else %}
-                <li><a href="{% url 'student-profile' user.student.pk %}">Профіль</a></li>
-            {% endif %}
+        <li><a href="{% url 'profile' %}">Профіль</a></li>
         {% endblock %}
         {% else %}
         <li><a href="{% url 'login' %}">Увійти до акаунту</a></li>

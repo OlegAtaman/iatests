@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% block auth_link %}
-    <li><a href="{% url 'logout' %}">Вийти</a></li>
+<li><a href="{% url 'logout' %}">Вийти</a></li>
 {% endblock %}
 {% block content %}
     <p>Ваше ім'я:</p>
     <h1>{{ student.full_name }}</h1>
     <p>Ви знаходитесь у групі:</p>
-    <h1>{{ student.group.code }}</h1>
-        <a href="{% url 'student-edit' student.pk %}">Редагувати профіль</a>
+    <h1>{{ student.group.group_code }}</h1>
+    <a href="{% url 'profile_edit' %}">Редагувати профіль</a>
     <hr>
-    {#    <a href="{% url 'join_course' %}">Доєднатися до курсу</a>#}
-
+    <a href="{% url 'join_course' %}">Доєднатися до курсу</a>
+    
     <h1>Ваші курси:</h1>
-    {% for course in student.course_set.get_queryset %}
+    {% for course in courses %}
         <div style="border: 1px solid black; padding: 5px; margin: 5px">
             <h3>{{ course.title }}</h3>
             <p>{{ course.description }}</p>
-            <a href="{% url 'course' course.pk %}">Перейти до курсу</a>
+            <a href="{% url 'course' course.code %}">Перейти до курсу</a>
         </div>
     {% endfor %}
 {% endblock %}

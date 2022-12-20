@@ -23,8 +23,8 @@
             <div style="border: 1px solid black; margin: 5px; padding: 5px;">
             <h3>{{ test.title }}</h3>
             <p>{{ test.description }}</p>
-            <p>Проходження займе: {{ test.duration }}</p>
-            <p>Дата та час публікації: {{ test.published }}</p>
+            <p>Проходження займе: {{ test.time_to_submit }}</p>
+            <p>Дата та час публікації: {{ test.time_to_publish }}</p>
             <p>Дедлайн: {{ test.deadline }}</p>
             <a href="{% url 'test' course.code test.id %}">Переглянути</a>
             </div>
@@ -37,7 +37,7 @@
         <div style="border: 1px solid black; margin: 5px; padding: 5px;">
             <h3>{{ test.title }}</h3>
             <p>{{ test.description }}</p>
-            <p>Проходження займе: {{ test.duration }}</p>
+            <p>Проходження займе: {{ test.time_to_submit }}</p>
             <p>Дедлайн: {{ test.deadline }}</p>
                 {% if user.status == 'S' %}
                     {% if test in completed %}
