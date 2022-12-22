@@ -396,6 +396,9 @@ class TestView(View):
                         all_answers.append(str(ans.id))
                     elif not request.POST.get(str(ans.id)) and not ans.is_correct:
                         points += points_per_answer
+                    else:
+                        all_answers.append(str(ans.id))
+
         mark = int(
             test.max_points * (points / real_max)
         )  # Вираховуємо реальну оцінку, за даною шкалою
