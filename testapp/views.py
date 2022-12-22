@@ -127,7 +127,13 @@ class NewCourseView(View):
         args = request.POST
         name = args.get("name")
         desc = args.get("description")
-        code = create_random_chars(10)
+        code = None
+        while not code:
+            code = create_random_chars(10)
+            course = Course.objects.filter(code=code).first()
+            if course:
+                code = None
+
         new_course = Course(title=name, description=desc, code=code)
         new_course.save()  # Збираємо дані з полів та створюємо новий курс
         new_course.users.add(
@@ -396,6 +402,9 @@ class TestView(View):
                         all_answers.append(str(ans.id))
                     elif not request.POST.get(str(ans.id)) and not ans.is_correct:
                         points += points_per_answer
+                    else:
+                        all_answers.append(str(ans.id))
+
         mark = int(
             test.max_points * (points / real_max)
         )  # Вираховуємо реальну оцінку, за даною шкалою
