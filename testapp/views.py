@@ -127,7 +127,13 @@ class NewCourseView(View):
         args = request.POST
         name = args.get("name")
         desc = args.get("description")
-        code = create_random_chars(10)
+        code = None
+        while not code:
+            code = create_random_chars(10)
+            course = Course.objects.filter(code=code).first()
+            if course:
+                code = None
+
         new_course = Course(title=name, description=desc, code=code)
         new_course.save()  # Збираємо дані з полів та створюємо новий курс
         new_course.users.add(
