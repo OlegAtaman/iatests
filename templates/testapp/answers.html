@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for question in questions %}
+        <h3>{{ question.question.content }}</h3>
+        {% for answer in question.answers %}
+            {% if answer.student_choice %}
+                {% if answer.answer.is_correct %}
+                    <p style="color: green"> {{ answer.answer.content }} </p>
+                {% else %}
+                    <p style="color: red"> {{ answer.answer.content }} </p>
+                {% endif %}
+            {% else %}
+                <p>{{ answer.answer.content }}</p>
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+
+{% endblock %}
