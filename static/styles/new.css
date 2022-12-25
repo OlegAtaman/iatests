@@ -13,23 +13,36 @@ body{
     justify-content: space-between;
     list-style: none;
     font-size: 21px;
+    height: 35px;
 }
 
 .logo {
     border-right: 1px solid black;
-    padding: 0 10px;
+    align-items: center;
+    padding: 1px 5px 1px 5px;
+    justify-content: center;
+}
+
+.logo-image{
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.user-profile{
+    display: flex;
+    height: 35px;
 }
 
 .user {
     border-left: 1px solid black;
-    padding: 0 10px;
-    
+    padding: 0 10px;   
+    line-height: 35px; 
 }
 
 .profile{
     border-left: 1px solid black;
     padding: 0 10px;
-
+    line-height: 35px; 
 }
 
 .profile-student{
@@ -200,3 +213,6 @@ th{
     width: 60%;
 }
 
+a{
+    text-decoration: none;
+}

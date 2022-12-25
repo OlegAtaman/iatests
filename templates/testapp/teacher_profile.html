@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block auth_link %}
-<li> <span class="user"> User: {{ user }}</span><a class="profile" href="{% url 'logout' %}">Вийти</a></li>
+<li> <div class="user-profile"> <span class="user"> User: {{ user }}</span><a class="profile" href="{% url 'logout' %}">Вийти</a></div></li>
 {% endblock %}
 {% block content %}
     <div class="edit-teacher">

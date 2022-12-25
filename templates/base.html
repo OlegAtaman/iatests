@@ -7,16 +7,16 @@
     <title>IATEsts</title>
 </head>
 <body style="margin:0% 15%">
-    <ul class="base-top">
-        <li class="logo"><a href="{% url 'main' %}">IATESTS</a></li>
-        {% if user.is_authenticated %}
-        {% block auth_link %}
-        <li > <span class="user">User: {{ user }}</span><a class="profile" href="{% url 'profile' %}">Профіль</a></li>
-        {% endblock %}
-        {% else %}
-        <li class="profile"><a href="{% url 'login' %}">Увійти до акаунту</a></li>
-        {% endif %}
-    </ul>
+        <ul class="base-top">
+            <li class="logo"><a href="{% url 'main' %}"><img class="logo-image" src="{% static 'images/Logo.png' %}"></a></li>
+            {% if user.is_authenticated %}
+            {% block auth_link %}
+            <li><div class="user-profile"><span class="user">{{ user }}</span><a class="profile" href="{% url 'profile' %}">Профіль</a></div></li>
+            {% endblock %}
+            {% else %}
+            <li class="profile"><a href="{% url 'login' %}">Увійти до акаунту</a></li>
+            {% endif %}
+        </ul>
     <hr>
     <!--<div class="username">
         User: {{ user }}
