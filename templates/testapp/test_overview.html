@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ test.title }}</h1>
-<p>{{ test.description }}</p>
-<table>
-<tr>
-    <th>Ім'я</th>
-    <th>Група</th>
-    <th>Оцінка</th>
-</tr>
-{% for sub in subs %}
+<div class="test-overview">
+    <h1>{{ test.title }}</h1>
+    <p class="change">{{ test.description }}</p>
+    <table>
     <tr>
-        <th>{{ sub.student.full_name }}</th>
-        <th>{{ sub.student.group.group_code }}</th>
-        <th>{{ sub.points }}</th>
+        <th class="name">Ім'я</th>
+        <th>Група</th>
+        <th>Оцінка</th>
     </tr>
-{% endfor %}
-</table>
+    {% for sub in subs %}
+        <tr>
+            <th>{{ sub.student.full_name }}</th>
+            <th>{{ sub.student.group.group_code }}</th>
+            <th>{{ sub.points }}</th>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
 {% endblock %}

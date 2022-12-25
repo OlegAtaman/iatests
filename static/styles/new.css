@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: red;
+}
+
+body{
+    border: 1px solid red;
+}
+
+.base-top {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    font-size: 21px;
+}
+
+.logo {
+    border-right: 1px solid black;
+    padding: 0 10px;
+}
+
+.user {
+    border-left: 1px solid black;
+    padding: 0 10px;
+    
+}
+
+.profile{
+    border-left: 1px solid black;
+    padding: 0 10px;
+
+}
+
+.profile-student{
+    padding: 20px 0 20px 10px;
+}
+
+.edit-profile{
+    font-size: 11px;
+    margin: 4px;
+}
+
+.join-course{
+    padding: 0px 5px;
+    margin: 5px 0;
+    display: block;
+    margin-left: auto;
+   
+}
+
+.link-course{
+    text-decoration: none;
+    font-size: 20px;
+}
+
+
+.top-courses-student{
+    display: flex;
+    margin: 0 5px;
+}
+
+.enter-course{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.hint{
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.code-course{
+    margin-top: 10px;
+}
+
+.edit-student{
+    margin: 15px 0 0 15px;
+}
+
+.group{
+    margin: 5px 0;
+}
+
+#new_group{
+    margin-bottom: 5px;
+}
+
+.new-course{
+    padding: 15px;
+}
+
+.change{
+    margin-top: 5px;
+    display: flex; 
+}
+
+.submission{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1px;
+}
+
+.description{
+    height: 50px;
+    width: 50%;      
+}
+
+.edit-teacher{
+    padding: 15px;
+}
+
+.list{
+    margin: 5px;
+}
+
+.new-subject{
+    padding: 15px;
+    text-align: center;
+}
+
+textarea{
+    resize: none;
+}
+
+.menu{
+    height: 20px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    margin: 5px;
+}
+
+.teacher-course{
+    padding: 5px;
+}
+
+.hidden{
+    display: none;
+}
+
+.textarea{
+    display: flex;
+}
+
+.add-question{
+    font-size: 20px;
+}
+
+.submission-question{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1px;
+    margin: 5px;    
+}
+
+.course-description{
+    padding: 15px;
+}
+
+.action-teacher{
+    display: flex;
+    justify-content: flex-end;
+}
+.create-test{
+    text-decoration: none;
+    padding: 1px;
+    font-size: 20px;
+}
+
+.teacher{
+    display: flex;
+    justify-content: space-between;
+}
+.actions{
+    display: flex;
+}
+
+.actions-items{
+    margin: 0 5px;
+}
+
+table{
+    margin: 5px 0;
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th{
+    border: 1px solid black;
+}
+
+.test-overview{
+    padding: 15px;
+}
+
+.name{
+    width: 60%;
+}
+

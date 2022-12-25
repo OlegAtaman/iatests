@@ -1,23 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{{ course.title }}</h1>
-    <p>{{ course.description }}</p>
-    {% if user.status == "T" %}
-    <p>Код курсу: <b>{{ course.code }}</b></p>
-    <a href="{% url 'c_overview' course.code %}">Журнал</a>
-    {% endif %}
-    <h3>Викладачі:</h3>
-    <p>
-    {% for teacher in teachers %}
-        {{ teacher.full_name }}<br>
-    {% endfor %}
-    </p>
-    {% if user.status == "T" %}
-    <a href="{% url 'delete_course' course.code %}">Видалити курс</a><br>
+    <div class="course-description">
+        <h1>{{ course.title }}</h1>
+        <p>{{ course.description }}</p>
+        {% if user.status == "T" %}
+        <div class="teacher">
+            <p>Код курсу: <b>{{ course.code }}</b></p>
+            <div class="actions">
+            <button class="actions-items"><a href="{% url 'c_overview' course.code %}">Журнал</a></button>
+            <button class="actions-items"><a href="{% url 'delete_course' course.code %}">Видалити курс</a></button>
+            </div>
+        </div>
+        {% endif %}
+        <h3></h3>
+        <p>
+            <b>Викладачі: </b>
+            {% for teacher in teachers %}
+            {{ teacher.full_name }}<br>
+            {% endfor %}
+        </p>
+        {% if user.status == "T" %}
+        <div class="action-teacher">
+        
+        
+        <button class=""><a class="create-test" href="{% url 'add_test' course.code %}"> + </a></button>
+        </div>
+        {% if future %}
     
-    <a href="{% url 'add_test' course.code %}">Створити новий тест</a>
-    {% if future %}
-    <hr>
+        <hr>
         <h1>Заплановані тести:</h1>
         {% for test in future %}
             <div style="border: 1px solid black; margin: 5px; padding: 5px;">
@@ -30,42 +40,45 @@
             <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
             </div>
         {% endfor %}
-    {% endif %}
-    {% endif %}
+        {% endif %}
+        {% endif %}
+    </div>
     <hr>
-    <h1>Активні тести:</h1>
-    {% for test in present %}
-        <div style="border: 1px solid black; margin: 5px; padding: 5px;">
-            <h3>{{ test.title }}</h3>
-            <p>{{ test.description }}</p>
-            <p>Проходження займе: {{ test.time_to_submit }}</p>
-            <p>Дедлайн: {{ test.deadline }}</p>
-                {% if user.status == 'S' %}
-                    {% if test in completed %}
-                    Виконано
-                    {% else %}
-                    <a href="{% url 'test' course.code test.id %}">Перейти до виконання</a>
-                    {% endif %}
-                {% else %}
-                <a href="{% url 'test' course.code test.id %}">Переглянути</a>
-                <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
-                <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
-                {% endif %}
-        </div>
-    {% endfor %}
-    {% if past %}
-        <hr>
-        <h1>Завершені тести</h1>
-        {% for test in past %}
+    <div class="course-description">
+        <h1>Активні тести:</h1>
+        {% for test in present %}
             <div style="border: 1px solid black; margin: 5px; padding: 5px;">
-            <h3>{{ test.title }}</h3>
-            <p>{{ test.description }}</p>
-            {% if user.status == 'T' %}
-            <a href="{% url 'test' course.code test.id %}">Переглянути</a>
-            <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
-            <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
-            {% endif %}
+                <h3>{{ test.title }}</h3>
+                <p>{{ test.description }}</p>
+                <p>Проходження займе: {{ test.time_to_submit }}</p>
+                <p>Дедлайн: {{ test.deadline }}</p>
+                    {% if user.status == 'S' %}
+                        {% if test in completed %}
+                        Виконано
+                        {% else %}
+                        <a href="{% url 'test' course.code test.id %}">Перейти до виконання</a>
+                        {% endif %}
+                    {% else %}
+                    <a href="{% url 'test' course.code test.id %}">Переглянути</a>
+                    <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
+                    <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
+                    {% endif %}
             </div>
         {% endfor %}
-    {% endif %}
+        {% if past %}
+            <hr>
+            <h1>Завершені тести</h1>
+            {% for test in past %}
+                <div style="border: 1px solid black; margin: 5px; padding: 5px;">
+                    <h3>{{ test.title }}</h3>
+                    <p>{{ test.description }}</p>
+                    {% if user.status == 'T' %}
+                    <a href="{% url 'test' course.code test.id %}">Переглянути</a>
+                    <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
+                    <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
+                {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 {% endblock %}

@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 {% block auth_link %}
-<li><a href="{% url 'logout' %}">Вийти</a></li>
+<li> <span class="user">User: {{ user }}</span> <a class="profile" href="{% url 'logout' %}">Вийти</a></li>
 {% endblock %}
 {% block content %}
-    <p>Ваше ім'я:</p>
-    <h1>{{ student.full_name }}</h1>
-    <p>Ви знаходитесь у групі:</p>
-    <h1>{{ student.group.group_code }}</h1>
-    <a href="{% url 'profile_edit' %}">Редагувати профіль</a>
+    <div class="profile-student">
+    <p>Ваше ім'я: {{ student.full_name }} </p>
+    <!--<h1>{{ student.full_name }}</h1>-->
+    <p>Ви знаходитесь у групі: {{ student.group.group_code }} </p>
+    <!--<h1>{{ student.group.group_code }}</h1> -->
+    <a class="edit-profile" href="{% url 'profile_edit' %}">Редагувати профіль</a>
+    </div>
     <hr>
-    <a href="{% url 'join_course' %}">Доєднатися до курсу</a>
-    
+    <div class="top-courses-student">
     <h1>Ваші курси:</h1>
+    <button class="join-course"><a class="link-course" href="{% url 'join_course' %}">+</a></button>
+    </div>
     {% for course in courses %}
         <div style="border: 1px solid black; padding: 5px; margin: 5px">
             <h3>{{ course.title }}</h3>

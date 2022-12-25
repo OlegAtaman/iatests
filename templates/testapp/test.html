@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="test-overview">
 <h1>{{ test.title }}</h1>
 <h3>{{ test.description }}</h3>
 <h3>Максимум балів: {{ test.max_points }}</h3>
@@ -7,6 +8,7 @@
 <p>На проходження: {{ test.time_to_submit }}</p>
 <p>Дедлайн: {{ test.deadline }}</p>
 {% endif %}
+</div>
 <hr>
 {% if user.status == 'S' %}
 <form method="post">

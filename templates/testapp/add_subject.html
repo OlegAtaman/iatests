@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Немає вашого предмету? Створіть його!</h1>
+<div class="new-subject">
+<h2>Немає вашого предмету?</h2>
+<h1>Створіть його!</h1>
 <form method="post">
     {% csrf_token %}
-    <p>Назва предмету:</p>
-    <input type="textfield" name="subject">
-    <input type="submit">
+    <p>Назва предмету: <input type="textfield" name="subject"> <input class="submission" type="submit" value="Додати"></p>
+    
     <p><input type="checkbox" name="add" checked>Додати до ваших предметів</p>
 </form>
+</div>
 {% endblock %}

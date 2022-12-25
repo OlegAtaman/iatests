@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="test-overview">
 <h1>{{ course.title }}</h1>
 <p>{{ course.description }}</p>
 <table>
@@ -20,6 +21,7 @@
     </tr>
 {% endfor %}
 </table>
+</div>
 {% if page != 1 %}
     <a href="{% url 'c_overview' course.code %}?page={{page|add:-1}}">Назад</a>
 {% endif %}

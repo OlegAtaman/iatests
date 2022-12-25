@@ -15,11 +15,12 @@
         });
         
     </script>
-    <form method="post">
+    <form method="post" >
         {% csrf_token %}
-        <p>Ваше повне ім'я:</p>
-        <input type="text" name="full_name" value="{{ student.full_name }}">
-        <select name="group" id="dropdown">
+        <div class="edit-student">
+        <p>Повне ім'я: <input type="text" name="full_name" value="{{ student.full_name }}"></p>
+        <p>Група: 
+        <select class="group" name="group" id="dropdown">
             {% for group in groups %}
                 {% if group == student.group %}
                     <option selected>{{ group.group_code }}</option>
@@ -29,11 +30,14 @@
             {% endfor %}
             <option value="add">СТВОРИТИ</option>
         </select>
+        </p>
         <div id="new_group" style="display:none">
             <p>Вdедіть назву групи:</p>
             <input type="text" name="n_group">
         </div>
-        <p></p>
+            <p></p>
+        
         <input type="submit">
+    </div>
     </form>
 {% endblock %}
