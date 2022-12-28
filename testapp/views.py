@@ -481,18 +481,20 @@ def courseoverview(request, code):
     # У словниках є об'єкт студента та його оцінки для даних тестів
     for student in students:
         subs = Submition.objects.filter(student=student)
-        marks = []
+        results = []
         for test in tests:
             try:
                 sub = subs.get(test=test)
+                sub_id = sub.id
             except Submition.DoesNotExist:
                 sub = None
+                sub_id = None
             if sub:
                 mark = sub.points
             else:
                 mark = "N/A"
-            marks.append(mark)
-        out.append({"student": student, "marks": marks})
+            results.append({"mark" : mark, "id" : sub_id})
+        out.append({"student": student, "results": results})
     ctx = {
         "course": course,
         "tests": tests,

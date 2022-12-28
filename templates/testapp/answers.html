@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+    <h1>Проходження #{{ submition.id }}</h1>
+    <h2>Тест: {{ submition.test.title }}</h2>
+    <h2>Студент: {{ submition.student.full_name }}</h2>
+    <h2>Оцінка: {{ submition.points }}</h2>
     {% for question in questions %}
         <h3>{{ question.question.content }}</h3>
         {% for answer in question.answers %}

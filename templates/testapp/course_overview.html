@@ -15,8 +15,12 @@
     <tr>
         <th>{{ stud.student.full_name }}</th>
         <th>{{ stud.student.group.group_code }}</th>
-        {% for mark in stud.marks %}
-            <th>{{ mark }}</th>
+        {% for mark in stud.results %}
+            {% if mark.id %}
+            <th><a href="{% url 'answers_overview' mark.id %}">{{ mark.mark }}</a></th>
+            {% else %}
+            <th><a>{{ mark.mark }}</a></th>
+            {% endif %}
         {% endfor %}
     </tr>
 {% endfor %}
