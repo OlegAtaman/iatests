@@ -4,9 +4,9 @@
     <form  method="post">
     {% csrf_token %}
     <p class="change">Ваше повне ім'я:
-    <input type="text" name="full_name" value="{{ teacher.full_name }}"></p>
+    <input class="input-teacher" type="text" name="full_name" value="{{ teacher.full_name }}"></p>
     <p class="change">Ваші контактні дані:
-    <input type="text" name="contacts" value="{{ teacher.contacts }}"></p>
+    <input class="input-teacher" type="text" name="contacts" value="{{ teacher.contacts }}"></p>
     <div class="change">
     <p>Предмети, які ви викладаєте:             </p>
     <select class="list" name="subjects" id="dropdown" multiple>

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
- <div class="new-course">
-<h1>Створити новий курс</h1>
-<form method="post">
-    {% csrf_token %}
+<div class="new-course">
+    <h1>Створити новий курс</h1>
+    <form method="post">
+        {% csrf_token %}
    
-    <p class="change">Назва: <input type="text" name="name"></p>
-    <div class="change description">
-    <p >Опис курсу: </p><textarea class="description" type="texta" name="description"></textarea>
-    </div>
-    <input class="change submission" type="submit" value="Підтвердити">
-    </div>
-</form>
+        <p class="change">Назва: <input class="input-teacher" type="text" name="name"></p>
+        <div class="change">
+        <p>Опис курсу: </p><textarea class="description" type="texta" name="description"></textarea>
+        </div>
+        <input class="change submission" type="submit" value="Підтвердити">
+    </form>
+</div>
 {% endblock %}

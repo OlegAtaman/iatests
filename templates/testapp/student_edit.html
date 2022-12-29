@@ -18,26 +18,25 @@
     <form method="post" >
         {% csrf_token %}
         <div class="edit-student">
-        <p>Повне ім'я: <input type="text" name="full_name" value="{{ student.full_name }}"></p>
-        <p>Група: 
-        <select class="group" name="group" id="dropdown">
-            {% for group in groups %}
-                {% if group == student.group %}
-                    <option selected>{{ group.group_code }}</option>
-                {% else %}
-                    <option>{{ group.group_code }}</option>
-                {% endif %}
-            {% endfor %}
-            <option value="add">СТВОРИТИ</option>
-        </select>
-        </p>
-        <div id="new_group" style="display:none">
-            <p>Вdедіть назву групи:</p>
-            <input type="text" name="n_group">
-        </div>
+            <p>Повне ім'я: <input class="input-teacher" type="text" name="full_name" value="{{ student.full_name }}"></p>
+            <p>Група: 
+            <select class="group" name="group" id="dropdown">
+                {% for group in groups %}
+                    {% if group == student.group %}
+                        <option selected>{{ group.group_code }}</option>
+                    {% else %}
+                        <option>{{ group.group_code }}</option>
+                    {% endif %}
+                {% endfor %}
+                <option value="add">СТВОРИТИ</option>
+            </select>
+            </p>
+            <div id="new_group" style="display:none">
+                <p>Вdедіть назву групи:</p>
+                <input class="input-teacher" type="text" name="n_group">
+            </div>
             <p></p>
-        
-        <input type="submit">
-    </div>
+            <input class="submission" type="submit">
+        </div>
     </form>
 {% endblock %}

@@ -26,6 +26,7 @@
 {% endfor %}
 </table>
 </div>
+<div class="pages">
 {% if page != 1 %}
     <a href="{% url 'c_overview' course.code %}?page={{page|add:-1}}">Назад</a>
 {% endif %}
@@ -57,4 +58,5 @@
 {% if page != pages %}
     <a href="{% url 'c_overview' course.code %}?page={{page|add:+1}}">Вперед</a>
 {% endif %}
+</div>
 {% endblock %}

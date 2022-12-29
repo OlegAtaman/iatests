@@ -4,28 +4,31 @@
 <li> <div class="user-profile"> <span class="user"> User: {{ user }}</span><a class="profile" href="{% url 'logout' %}">Вийти</a></div></li>
 {% endblock %}
 {% block content %}
+    
     <div class="edit-teacher">
-    <p><b>Ваше ім'я:</b> {{ teacher.full_name }}</p>
-    <!--<h1>{{ teacher.full_name }}</h1>-->
-    <p><b>Ваші контакти:</b> {{ teacher.contacts }}</p>
-    <!--<p>{{ teacher.contacts }}</p>-->
-    <p><b>Ви викладаєте:</b></p>
-    {% for subject in subjects %}
-    <p>{{ subject.subject_name }}</p>
-    {% endfor %}
-    <a class="edit-profile" href="{% url 'profile_edit' %}">Редагувати профіль</a>
+        <div class="container">
+            <p><b>Ваше ім'я:</b> {{ teacher.full_name }}</p>
+            <!--<h1>{{ teacher.full_name }}</h1>-->
+            <p><b>Ваші контакти:</b> {{ teacher.contacts }}</p>
+            <!--<p>{{ teacher.contacts }}</p>-->
+            <p><b>Ви викладаєте:</b></p>
+            {% for subject in subjects %}
+            <p>{{ subject.subject_name }}</p>
+            {% endfor %}
+            <a class="edit-profile" href="{% url 'profile_edit' %}">Редагувати профіль</a>
+        </div>
     </div>
     <hr>
     <div class="top-courses-student">
-    <h1>Ваші курси:</h1>
-    <button class="join-course show-menu"> + </button>
+        <h1 class="your-courses">ВАШІ КУРСИ</h1>
+        <button class="join-course show-menu"> + </button>
     </div>
     <div class="menu hidden animate__animated">
         <button class="submission"> <a class="teacher-course" href="{% url 'add_course' %}">Створити курс</a> </button>
         <button class="submission"> <a class="teacher-course" href="{% url 'join_course' %}">Доєднатися до курсу</a> </button>
     </div>
     {% for course in courses %}
-        <div style="border: 1px solid black; padding: 5px; margin: 5px">
+        <div class="list-course">
             <h3>{{ course.title }}</h3>
             <p>{{ course.description }}</p>
             <a href="{% url 'course' course.code %}">Перейти до курсу</a>
