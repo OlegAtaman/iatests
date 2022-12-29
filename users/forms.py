@@ -16,6 +16,7 @@ class UserCreationForm(UserCreationForm):
     #     label=_('Вкажіть ваш статус:'),
     #     required=True
     #     )
+    
 
     class Meta(UserCreationForm.Meta):
         model = User

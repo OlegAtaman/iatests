@@ -1,47 +1,59 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<div class="test-overview">
-<h1>{{ test.title }}</h1>
-<h3>{{ test.description }}</h3>
-<h3>Максимум балів: {{ test.max_points }}</h3>
-{% if user.status == 'T' %}
-<p>На проходження: {{ test.time_to_submit }}</p>
-<p>Дедлайн: {{ test.deadline }}</p>
-{% endif %}
-</div>
-<hr>
+<div class="info-test">
+    <div class="top-test">
+        <div class="test-overview">
+    
+            <h1>{{ test.title }}</h1>
+            <h3>{{ test.description }}</h3>
+            <h3>Максимум балів: {{ test.max_points }}</h3>
+            {% if user.status == 'T' %}
+            <p>На проходження: {{ test.time_to_submit }}</p>
+            <p>Дедлайн: {{ test.deadline }}</p>
+            {% endif %}
+
+        </div>
+        <div class="timer">
+            <div class="timer-content">
+                <span class="minutes">0</span>:<span class="sec">10</span>
+            </div>       
+        </div>
+    </div>
 {% if user.status == 'S' %}
 <form method="post">
 {% csrf_token %}
 {% for q in quetions %}
-<div id="{{ q.quetion.id }}" style="border: 1px solid black; margin: 5px; padding:5px;">
-<h3>{{ q.quetion.content }}</h3>
-<p>За відповідь: {{ q.quetion.points }} балів</p>
-    {% for answer in q.answers %}
-        {% if q.type == 'radio' %}
-            <p><input type="radio" name="{{ q.quetion.id }}" value="{{ answer.id }}">{{ answer.content }}</p>
-        {% elif q.type == 'check' %}
-            <p><input type="checkbox" name="{{ answer.id }}">{{ answer.content }}</p>
+<div class="question-stud" id="{{ q.quetion.id }}">
+    <h3>{{ q.quetion.content }}</h3>
+    <p>За відповідь: {{ q.quetion.points }} балів</p>
+        {% for answer in q.answers %}
+            {% if q.type == 'radio' %}
+                <p><input type="radio" name="{{ q.quetion.id }}" value="{{ answer.id }}">{{ answer.content }}</p>
+            {% elif q.type == 'check' %}
+                <p><input type="checkbox" name="{{ answer.id }}">{{ answer.content }}</p>
+            {% endif %}
+        {% endfor %}
+            {% if q.type == 'check' %}
+                <p>Завдання з кількома правильними відповідями</p>
+            {% else %}
+                <p>Завдання з однією правильною відповіддю</p>
         {% endif %}
-    {% endfor %}
-    {% if q.type == 'check' %}
-    <p style="color:grey; font-size:small">Завдання з кількома правильними відповідями</p>
-    {% else %}
-    <p style="color:grey; font-size:small">Завдання з однією правильною відповіддю</p>
-    {% endif %}
 </div>
 {% endfor %}
-<input type="submit" value="Підтвердити">
+<input class="submit-test" type="submit" value="Підтвердити">
 </form>
 {% else %}
-{% for q in quetions %}
-<div style="border: 1px solid black; margin: 5px; padding:5px;">
-<h3>{{ q.quetion.content }}</h3>
-<p>За відповідь: {{ q.quetion.points }} балів</p>
-    {% for answer in q.answers %}
-        <p>{{ forloop.counter }}. {% if answer.is_correct %}[CORRECT] {% endif %}{{ answer.content }}</p>
-    {% endfor %}
-</div>
+    {% for q in quetions %}
+    <div class="tests-teacher">
+        <h3>{{ q.quetion.content }}</h3>
+        <p>За відповідь: {{ q.quetion.points }} балів</p>
+            {% for answer in q.answers %}
+                <p>{{ forloop.counter }}. {% if answer.is_correct %}[CORRECT] {% endif %}{{ answer.content }}</p>
+            {% endfor %}
+    </div>
 {% endfor %}
 {% endif %}
+</div>
+<script src="{% static 'js/timer.js' %}"></script>
 {% endblock %}
