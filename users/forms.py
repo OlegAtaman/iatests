@@ -5,8 +5,22 @@ from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
-
 class UserCreationForm(UserCreationForm):
+
+    def __init__ (self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs.update({
+            'class': 'input-teacher'
+        })
+        self.fields["password1"].widget.attrs.update({
+            'class': 'input-teacher'
+        })
+        self.fields["password2"].widget.attrs.update({
+            'class': 'input-teacher'
+        })
+        self.fields["status"].widget.attrs.update({
+            'class': 'input-teacher'
+        })
 
     # CHOICES = [('S', 'Студент'), ('T', 'Викладач')]
 

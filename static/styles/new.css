@@ -12,7 +12,6 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Simplifica', sans-serif;
-    border: 3px solid white;
 }
 
 .base-top {
@@ -433,4 +432,39 @@ a{
     align-items: center;
     height: 100%;
     font-size: 50px;
+}
+
+.registr{
+    text-align: center;
+}
+
+.registration{
+    font-size: 20px;
+    border: 3px solid white;
+    margin: 20px;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.confirm{
+    float: right;
+    color: black;
+    border: white;
+    background-color: white;
+    border-radius: 10px;
+    opacity: 0.7;
+    padding: 10px;
+}
+
+.confirm:hover{
+    cursor: pointer;
+}
+
+.way-to-reg{
+    padding: 4px;
+    background-color: white;
+    color: black;
+    opacity: 0.7;
+    border-radius: 5px;
+    border: white;
 }

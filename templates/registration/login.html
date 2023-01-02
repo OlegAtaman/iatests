@@ -6,12 +6,20 @@
     {% if form.errors %}
         {{ form.errors.error}}
     {% endif %}
+    <div class="registration">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <span>Usename: </span>{{ form.username }}
+            <br>
+            <br>
+            <span>Password: </span>{{ form.password }}
+            <!--{{ form }}-->
+            <br>
+            <br>
+            <span>Також ви можете <a class="way-to-reg" href="{% url 'register' %}">зареєструватися</a>.</span>
+            <input type="submit" class="confirm">
+        </form>
+    </div>
 
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit">
-    </form>
-
-    <p>Також ви можете <a href="{% url 'register' %}">зареєструватися</a>.</p>
+    
 {% endblock %}

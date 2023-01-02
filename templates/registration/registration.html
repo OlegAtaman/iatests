@@ -1,10 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Реєстрація</h1>
-    <form action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit">
-    </form>
+    <div class="registration">
+        <h1 class="registr">Реєстрація</h1>
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <span>Usename: </span>{{ form.username }}
+            <p>Required 150 characters or fewer. Letters, digits and @//+/-|_</p>
+            <span>Password: </span>{{ form.password1 }}
+            <h6>Your password can't be similar to your other personal information</h6>
+            <h6>Your password must contain at least 8 characters</h6>
+            <h6>Your password can't be a commonly used password</h6>
+            <h6>Your password can't be entirelly numeric</h6>
+            <span>Password confirmation: </span>{{ form.password2 }}
+            <h6>Enter the same password as before, for verification</h6>
+            <span>Status: </span>{{ form.status }}
+            <!--{{ form }}-->
+            <input  type="submit" class="confirm">
+        </form>
+    </div>
 {% endblock %}
