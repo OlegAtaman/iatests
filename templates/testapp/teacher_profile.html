@@ -31,7 +31,7 @@
         <div class="list-course">
             <h3>{{ course.title }}</h3>
             <p>{{ course.description }}</p>
-            <a href="{% url 'course' course.code %}">Перейти до курсу</a>
+            <a class="edit-profile" style="font-size:15px" href="{% url 'course' course.code %}">Перейти до курсу</a>
         </div>
     {% endfor %}
     <script src="{% static 'js/menu.js' %}"></script>

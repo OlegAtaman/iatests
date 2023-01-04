@@ -45,13 +45,13 @@
                 <p>Проходження займе: {{ test.time_to_submit }}</p>
                 <p>Дата та час публікації: {{ test.time_to_publish }}</p>
                 <p>Дедлайн: {{ test.deadline }}</p>
-                <a href="{% url 'test' course.code test.id %}">Переглянути</a>
-                <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
+                <a class="edit-profile" style="font-size:15px;" href="{% url 'test' course.code test.id %}">Переглянути</a>
+                <a class="edit-profile" style="font-size:15px;" href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
             </div>
         {% endfor %}
         
         {% endif %}
-    
+        {% if present %}
             <h1 class="title">АКТИВНІ ТЕСТИ:</h1>
             {% for test in present %}
                 <div class="tests">
@@ -66,12 +66,13 @@
                             <a href="{% url 'test' course.code test.id %}">Перейти до виконання</a>
                             {% endif %}
                         {% else %}
-                        <a href="{% url 'test' course.code test.id %}">Переглянути</a>
-                        <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
-                        <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
+                        <a class="edit-profile" style="font-size:15px;" href="{% url 'test' course.code test.id %}">Переглянути</a>
+                        <a class="edit-profile" style="font-size:15px;" href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
+                        <a class="edit-profile" style="font-size:15px;" href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
                         {% endif %}
                 </div>
             {% endfor %}
+        {% endif %}
         {% if past %}
             <h1 class="title">ЗАВЕРШЕНІ ТЕСТИ:</h1>
             {% for test in past %}
@@ -79,9 +80,9 @@
                     <h3>{{ test.title }}</h3>
                     <p>{{ test.description }}</p>
                     {% if user.status == 'T' %}
-                    <a href="{% url 'test' course.code test.id %}">Переглянути</a>
-                    <a href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
-                    <a href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
+                    <a class="edit-profile" style="font-size:15px;" href="{% url 'test' course.code test.id %}">Переглянути</a>
+                    <a class="edit-profile" style="font-size:15px;" href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
+                    <a class="edit-profile" style="font-size:15px;" href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
                 {% endif %}
                 </div>
             {% endfor %}
