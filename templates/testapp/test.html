@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<input type="hidden" value="{% url 'course' course.code %}" name="url">
 <div class="info-test">
     <div class="top-test">
         <div class="test-overview">
@@ -17,7 +18,7 @@
         {% if user.status == 'S' %}
         <div class="timer">
             <div class="timer-content">
-                <span class="minutes">0</span>:<span class="sec">10</span>
+                <span class="minutes">{{ time.mins }}</span>:<span class="sec">{{ time.secs }}</span>
             </div>       
         </div>
         <script src="{% static 'js/timer.js' %}"></script>
@@ -47,7 +48,6 @@
 <input class="submit-test" type="submit" value="Підтвердити">
 </form>
 {% else %}
-
     {% for q in quetions %}
     <div class="tests-teacher">
         <h3>{{ q.quetion.content }}</h3>

@@ -340,7 +340,11 @@ class TestView(View):
             else:
                 type = "radio"
             out.append({"quetion": quet, "answers": answers, "type": type})
-        ctx = {"test": test, "quetions": out}
+        time = {
+            "mins" : test.time_to_submit.hour,
+            "secs" : test.time_to_submit.minute
+        }
+        ctx = {"test": test, "quetions": out, "time" : time, "course" : course}
         if request.user.status == "S":  # Якщо наш користувач - студент
             if test.time_to_publish >= timezone.localtime(
                 timezone.now()

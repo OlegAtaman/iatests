@@ -60,7 +60,9 @@ $(document).ready(function(){
 
     $(".new_quetion_btn").click(function(){
         $("#cont").append(`
-        <div class="unquetion" style="border:1px solid black; margin: 5px; padding: 5px">
+        <div class="unquetion" style="border:3px solid white; border-radius:5px; background: rgb(255,0,0);
+        background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+        margin: 5px; padding: 5px">
         <p class="qname">Текст питання:
         <input  name="q_name" type="text"></p>
         <p class="points">Кількість балів:
@@ -111,7 +113,8 @@ $(document).ready(function(){
                 quetions += $(this).children('input.ans').val();
                 quetions += '</p>';
             });
-            var out = `<div class="quetion" style="border:1px solid black; margin: 5px; padding: 5px"><b>Питання:</b> <p class="q">`
+            var out = `<div class="quetion" style="border:3px solid white; border-radius:5px; background: rgb(255,0,0);
+            background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%); margin: 5px; padding: 5px"><b>Питання:</b> <p class="q">`
                 + qname + '</p><b>Кількість балів:</b> <p class="p">' + points 
                 + '</p>' + quetions + '</div>';
             $(this.parentNode).replaceWith(out);
