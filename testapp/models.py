@@ -52,7 +52,7 @@ class Test(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
     max_points = models.DecimalField(max_digits=10, decimal_places=0)
-    time_to_submit = models.TimeField()
+    time_to_submit = models.DurationField()
     time_to_publish = models.DateTimeField(null=True)
     deadline = models.DateTimeField(null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)

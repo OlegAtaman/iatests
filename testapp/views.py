@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from math import ceil  # Для округлення вгору
 
 from django.contrib.auth.decorators import login_required
@@ -287,16 +287,19 @@ class NewTestView(View):
 
     def post(self, request, code):
         args = request.POST
+        print(args)
         t = Test(
             title=args.get("qname"),
             description=args.get("desc"),
-            time_to_submit=args.get("time"),
+            time_to_submit=timedelta(days=0, hours=int(args.get("hours")), minutes=int(args.get("minutes")),
+                seconds=int(args.get("seconds")), microseconds=0),
             time_to_publish=args.get("pub_time"),
             max_points=args.get("m_points"),
             course=Course.objects.get(code=code),
             deadline=args.get("deadline"),
         )  # Отримуємо купу даних з полів та створюємо об'єкти тесту
         t.save()
+        print(t.time_to_submit)
         for quetion in json.loads(
             request.POST.get("q")
         ):  # Та об'єкти питань та відповідей
@@ -341,9 +344,10 @@ class TestView(View):
                 type = "radio"
             out.append({"quetion": quet, "answers": answers, "type": type})
         time = {
-            "mins" : test.time_to_submit.hour,
-            "secs" : test.time_to_submit.minute
+            "minutes" : test.time_to_submit.seconds // 60,
+            "secs" : test.time_to_submit.seconds % 60
         }
+        print(time)
         ctx = {"test": test, "quetions": out, "time" : time, "course" : course}
         if request.user.status == "S":  # Якщо наш користувач - студент
             if test.time_to_publish >= timezone.localtime(

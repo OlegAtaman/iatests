@@ -35,13 +35,16 @@ $(document).ready(function(){
                 };
             quetions.push(quetion);
             });
+            console.log($(this.parentNode).children('.t_cont').children('.t2').val());
             $.ajax({
                 url: "",
                 type: "post",
                 data: {
                     qname : $(this.parentNode).children('.hi').children('input').val(),
                     desc : $(this.parentNode).children('textarea').val(),
-                    time : $(this.parentNode).children('.t_cont').children('input').val(),
+                    hours : $(this.parentNode).children('.t_cont').children('.t1').val(),
+                    minutes : $(this.parentNode).children('.t_cont').children('.t2').val(),
+                    seconds : $(this.parentNode).children('.t_cont').children('.t3').val(),
                     pub_time : $(this.parentNode).children('.dt_cont').children('input').val(),
                     deadline : $(this.parentNode).children('.dt_cont2').children('input').val(),
                     m_points: $(this.parentNode).children('.m_points').children('input').val(),
