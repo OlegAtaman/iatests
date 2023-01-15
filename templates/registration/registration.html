@@ -2,19 +2,19 @@
 
 {% block content %}
     <div class="registration">
-        <h1 class="registr">Реєстрація</h1>
+        <h1>Реєстрація</h1>
+        <br>
         <form action="{% url 'register' %}" method="post">
             {% csrf_token %}
-            <span>Usename: </span>{{ form.username }}
-            <p>Required 150 characters or fewer. Letters, digits and @//+/-|_</p>
-            <span>Password: </span>{{ form.password1 }}
-            <h6>Your password can't be similar to your other personal information</h6>
-            <h6>Your password must contain at least 8 characters</h6>
-            <h6>Your password can't be a commonly used password</h6>
-            <h6>Your password can't be entirelly numeric</h6>
-            <span>Password confirmation: </span>{{ form.password2 }}
-            <h6>Enter the same password as before, for verification</h6>
-            <span>Status: </span>{{ form.status }}
+            <span>Логін: </span>{{ form.username }}
+            <h6>Має складатись з символів англійського алфавіту, цифр чи спеціальних символів</h6>
+            <span>Пароль: </span>{{ form.password1 }}
+            <h6>Ваш пароль не має бути схожим на логін</h6>
+            <h6>Ваш пароль має складатися принаймні з 8 символів</h6>
+            <h6>Ваш пароль не може складатися лише з цифр</h6>
+            <span>Підтвердження паролю: </span>{{ form.password2 }}
+            <h6>Уведіть пароль ще раз, для підтвердження</h6>
+            <span>Статус: </span>{{ form.status }}
             <!--{{ form }}-->
             <input  type="submit" class="confirm">
         </form>

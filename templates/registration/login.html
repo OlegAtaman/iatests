@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Login</h1>
-
     {% if form.errors %}
         {{ form.errors.error}}
     {% endif %}
     <div class="registration">
+        <h1>Увійти до акаунту</h1>
+        <br>
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
-            <span>Usename: </span>{{ form.username }}
+            <span>Логін: </span>{{ form.username }}
             <br>
             <br>
-            <span>Password: </span>{{ form.password }}
+            <span>Пароль: </span>{{ form.password }}
             <!--{{ form }}-->
             <br>
             <br>

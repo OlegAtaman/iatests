@@ -26,11 +26,11 @@ body{
     list-style: none;
     font-size: 21px;
     height: 35px;
-    border: 3px solid white;
+    border: 2px solid white;
     border-top: none;
     border-radius:  0px 0px 5px 5px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .logo {
@@ -51,13 +51,13 @@ body{
 }
 
 .user {
-    border-left: 3px solid white;
+    border-left: 2px solid white;
     padding: 0 10px;   
     line-height: 35px; 
 }
 
 .profile{
-    border: 3px groove white;
+    border: 2px groove white;
     padding: 0 10px;
     line-height: 31px; 
 }
@@ -90,11 +90,11 @@ body{
     padding: 0px 8px;
     margin: 5px 0;
     margin-left: auto;
-    border: 3px solid white;
+    border: 2px solid white;
     opacity: 0.8;
     border-radius: 8px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .join-course:hover{
@@ -104,10 +104,10 @@ body{
 .list-course{
     padding: 5px;
     margin: 5px;
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .link-course{
@@ -122,12 +122,12 @@ body{
 }
 
 .enter-course{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     text-align: center;
     margin: 15px 50px 10px 50px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .hint{
@@ -146,7 +146,7 @@ body{
 .group{
     margin: 5px 0;
     background-color: white;
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     color: black;
 }
@@ -156,12 +156,12 @@ body{
 }
 
 .new-course{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     margin: 15px;
     padding: 5px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.4) 0%, rgba(222,222,222,0.4) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.4) 0%, rgba(222,222,222,0.5) 0%);
 }
 
 .change{
@@ -171,11 +171,11 @@ body{
 }
 
 .submission{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     padding: 1px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.4) 0%, rgba(222,222,222,0.4) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.4) 0%, rgba(222,222,222,0.5) 0%);
 }
 
 .submission:hover{
@@ -194,17 +194,17 @@ body{
 
 .edit-teacher{
     padding: 5px;
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     margin: 15px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .container{
     padding: 5px;
     /* border: 3px solid white; */
-    border-radius: 8px;
+    border-radius: 5px;
     width: 300px;
 }
 
@@ -220,13 +220,13 @@ option{
 }
 
 .new-subject{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     margin: 15px 150px 10px 150px;
     padding: 15px;
     text-align: center;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 textarea{
@@ -235,14 +235,14 @@ textarea{
 
 .menu{
     height: 20px;
-    border: 3px solid white;
+    border: 2px solid white;
     display: flex;
     justify-content: space-around;
     padding: 5px;
     margin: 5px;
     border-radius: 5px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .teacher-course{
@@ -288,20 +288,20 @@ textarea{
 }
 
 .actions-items{
-    border: 3px solid white;
+    border: 2px solid white;
     margin: 0 5px;
     border-radius: 5px;
 }
 
 table{
     margin: 5px 0;
-    border: 3px solid white;
+    border: 2px solid white;
     border-collapse: collapse;
     width: 100%;
 }
 
 th{
-    border: 3px solid white;
+    border: 2px solid white;
 }
 
 .test-overview{
@@ -359,17 +359,17 @@ a{
 }
 
 .information{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     margin: 10px;
     padding: 0 0 5px 25px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .tests{
-    border: 3px solid white;
-    border-radius: 15px;
+    border: 2px solid white;
+    border-radius: 5px;
     
 }
 
@@ -387,8 +387,8 @@ a{
 
 .tests{
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
-    border: 3px solid white;
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+    border: 2px solid white;
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
@@ -399,12 +399,12 @@ a{
 }
 
 .tests-teacher{
-    border: 3px solid white;
+    border: 2px solid white;
     margin: 13px;
     padding: 5px;
     border-radius: 5px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .info-test{
@@ -414,7 +414,7 @@ a{
 
 .input-teacher{
     color: black;
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     opacity: 0.7;
     background-color: white;
@@ -422,18 +422,28 @@ a{
 }
 
 .btn-enter-course{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     padding: 2px;
 }
 
 .main{
-    border: 3px solid white;
-    border-radius: 15px;
+    line-height: 30px;
+    font-size: large;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 15px;
     margin: 25px;
-    height: 300px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+}
+
+.main > h2 {
+    line-height: 44px;
+}
+
+.main > div > span > p {
+    text-indent: 10 px;
 }
 
 .home{
@@ -444,19 +454,19 @@ a{
 }
 
 .submit-test{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     padding: 2px;
     margin: 5px;
 }
 
 .question-stud{
-    border: 3px solid white;
+    border: 2px solid white;
     border-radius: 5px;
     margin: 5px;
     padding: 7px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .top-test{
@@ -470,7 +480,7 @@ a{
     border: 3px solid;
     border-radius: 5px;
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .timer-content{
@@ -487,10 +497,11 @@ a{
 
 .registration{
     font-size: 20px;
-    border: 3px solid white;
+    border: 2px solid white;
     margin: 20px;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 25px;
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
 }
 
 .confirm{
@@ -518,5 +529,10 @@ a{
 
 .table-test {
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+}
+
+.guide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
