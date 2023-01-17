@@ -68,15 +68,15 @@ body{
 }
 
 .edit-profile:link, .edit-profile:visited{
-    text-decoration: underline;
-    font-size: 11px;
-    margin: 4px;
+    text-decoration: none;
+    font-size: 30px;
+    color: rgb(78, 78, 78);
 }
 
 .edit-profile:hover {
     text-decoration: none;
-    font-size: 11px;
-    margin: 4px;
+    font-size: 30px;
+    color: rgb(78, 78, 78);
 }
 
 .your-courses{
@@ -103,12 +103,42 @@ body{
 } */
 
 .list-course{
-    padding: 5px;
+    position: relative;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-flow: column;
+    font-size: 20px;
+    padding: 20px;
+    height: 300px;
     margin: 5px;
     border: 2px solid white;
     border-radius: 5px;
     background: rgb(255,0,0);
     background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+}
+
+.lc_sub {
+    background: rgb(255,0,0);
+    background: linear-gradient(90deg, rgba(255,0,0,0.7) 0%, rgba(222,222,222,0.7) 0%);
+}
+
+.list-course > button {
+    position: absolute;
+    bottom: 0px;
+    margin: 20px auto;
+    width: 90%;
+    height: 50px;
+}
+
+.list-course > h3 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.course-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .link-course{
@@ -178,12 +208,23 @@ body{
 }
 
 .new-course{
+    
+    width: 30%;
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    padding: 10px 0px;
+    text-align: center;
+    font-size: 20px;
+
     border: 2px solid white;
     border-radius: 5px;
-    margin: 15px;
-    padding: 5px;
     background: rgb(255,0,0);
     background: linear-gradient(90deg, rgba(255,0,0,0.4) 0%, rgba(222,222,222,0.5) 0%);
+}
+
+.nc_content {
+     width:100px;
 }
 
 .change{
@@ -227,7 +268,16 @@ body{
     padding: 5px;
     /* border: 3px solid white; */
     border-radius: 5px;
-    width: 300px;
+}
+
+.container > p{
+    line-height: 40px;
+    font-size: 30px;
+}
+
+.subj {
+    font-size: 20px;
+    color:rgb(201, 201, 201);
 }
 
 .list{
@@ -256,7 +306,7 @@ textarea{
 }
 
 .menu{
-    height: 20px;
+    height: 40px;
     border: 2px solid white;
     display: flex;
     justify-content: space-around;
@@ -269,6 +319,7 @@ textarea{
 
 .teacher-course{
     padding: 5px;
+    font-size: 20px;
 }
 
 .hidden{
