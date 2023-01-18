@@ -15,7 +15,7 @@
             {% for subject in subjects %}
             <p class="subj">&emsp;{{ subject.subject_name }}</p>
             {% endfor %}
-            <a class="edit-profile" href="{% url 'profile_edit' %}">Редагувати профіль</a>
+            <button class="submission"><a class="edit-profile" href="{% url 'profile_edit' %}">Редагувати профіль</a></button>
         </div>
     </div>
     <hr>
@@ -30,9 +30,9 @@
     <div class="course-container">
     {% for course in courses %}
         <div class="list-course">
-            <h3>{{ course.title }}</h3>
-            <p>{{ course.description }}</p>
-            <button style="background: linear-gradient(90deg, rgba(255,0,0,0.7) 0%, rgba(222,222,222,0.7) 0%);" class="submission"><a class="edit-profile" href="{% url 'course' course.code %}">Перейти до курсу</a></button>
+            <h3>{{ course.c.title }}</h3>
+            <p>{{ course.desc }}</p>
+            <button style="background: linear-gradient(90deg, rgba(255,0,0,0.7) 0%, rgba(222,222,222,0.7) 0%);" class="submission"><a class="edit-profile" href="{% url 'course' course.c.code %}">Перейти до курсу</a></button>
         </div>
     {% endfor %}
     </div>

@@ -39,7 +39,13 @@ def profile_view(request):
         courses = Course.objects.filter(
             users__in=[request.user]
         )  # Всі курси, які він веде
-        ctx = {"teacher": current_teacher[0], "subjects": subjects, "courses": courses}
+        course_list = []
+        for course in courses:
+            desc = course.description
+            if len(course.description) > 214:
+                desc = course.description[:213] + '...'
+            course_list.append({'c':course, 'desc':desc})
+        ctx = {"teacher": current_teacher[0], "subjects": subjects, "courses": course_list}
         return render(request, "testapp/teacher_profile.html", ctx)
     else:  # Інакше перед нами студент
         current_student = Student.objects.get(
@@ -48,7 +54,13 @@ def profile_view(request):
         courses = Course.objects.filter(
             users__in=[request.user]
         )  # Та всі курси, на яких він вчиться
-        ctx = {"student": current_student, "courses": courses}
+        course_list = []
+        for course in courses:
+            desc = course.description
+            if len(course.description) > 214:
+                desc = course.description[:213] + '...'
+            course_list.append({'c':course, 'desc':desc})
+        ctx = {"student": current_student, "courses": course_list}
         return render(request, "testapp/student_profile.html", ctx)
 
 
