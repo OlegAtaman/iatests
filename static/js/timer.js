@@ -3,7 +3,7 @@ const minutes = document.querySelector(".minutes")
 const sec = document.querySelector(".sec")
 let time = Number(sec.innerHTML) + Number(minutes.innerHTML) * 60
 let zminna = setInterval(()=>{
-        console.log("okay")
+        console.log("time = "+ time)
         if (time == 0) {
             window.location.replace(url_);
         }
