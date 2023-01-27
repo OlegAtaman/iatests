@@ -7,6 +7,7 @@
     <title>IATEsts</title>
 </head>
 <body style="margin:0% 5%">
+        {% block basetop %}
         <ul class="base-top">
             <li class="logo"><a href="{% url 'main' %}"><img class="logo-image" src="{% static 'images/Logo.png' %}"></a></li>
             {% if user.is_authenticated %}
@@ -17,6 +18,7 @@
             <li class="profile"><a href="{% url 'login' %}">Увійти до акаунту</a></li>
             {% endif %}
         </ul>
+        {% endblock %}
     <!--<div class="username">
         User: {{ user }}
     </div>-->

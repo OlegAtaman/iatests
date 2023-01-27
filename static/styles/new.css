@@ -126,7 +126,7 @@ body{
     position: absolute;
     bottom: 0px;
     margin: 20px auto;
-    width: 90%;
+    width: 88%;
     height: 50px;
 }
 
@@ -320,6 +320,7 @@ textarea{
 .teacher-course{
     padding: 5px;
     font-size: 20px;
+    color:rgb(78, 78, 78)
 }
 
 .hidden{
@@ -357,7 +358,10 @@ textarea{
 }
 
 .actions{
-    display: flex;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 10px 10px 0px 0px;
 }
 
 .actions-items{
@@ -432,22 +436,66 @@ a{
 }
 
 .information{
+    min-width: 990px;
+    overflow-wrap: break-word;
+    position: relative;
     border: 2px solid white;
     border-radius: 5px;
-    margin: 10px;
-    padding: 0 0 5px 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
     background: rgb(255,0,0);
     background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+}
+
+.course-info {
+    width: 700px;
+    overflow-wrap: break-word;
+}
+
+.actions > .submission {
+    height: 50px;
+    margin: auto;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .tests{
     border: 2px solid white;
     border-radius: 5px;
-    
+    position: relative;
+    min-width: 980px;
+}
+
+.controls {
+    position: absolute;
+    bottom: 10%;
+    right: 15px;
+    /* height: 100%; */
+}
+
+.controls > .submission {
+    height: 50px;
+    margin: auto;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    /* vertical-align: middle; */
+}
+
+.test-info {
+    overflow-wrap: break-word;
+    display: block;
+    /* width: 735px; */
+    width: 40%
+}
+
+.submission > .edit-profile:link, .submission > .edit-profile:visited {
+    font-size: 24px;
 }
 
 .tests-list{
-    padding-left: 40px;
     margin-bottom: 10px;
 }
 
