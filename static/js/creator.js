@@ -3,8 +3,8 @@ $(document).ready(function(){
     var url_ = $("input[name=url]").val();
     $(".ubutton").click(function(){
         var quetions = [];
-        var divs = $(this.parentNode).children('#cont').children('.quetion');
-        var count = $(this.parentNode).children('#cont').children('.quetion').length;
+        var divs = $('#cont').children('.quetion');
+        var count = divs.length;
         if (count == 0) {
             alert('У тесті має бути принаймні одне питання!')
         } else {
@@ -35,19 +35,18 @@ $(document).ready(function(){
                 };
             quetions.push(quetion);
             });
-            console.log($(this.parentNode).children('.t_cont').children('.t2').val());
             $.ajax({
                 url: "",
                 type: "post",
                 data: {
-                    qname : $(this.parentNode).children('.hi').children('input').val(),
-                    desc : $(this.parentNode).children('textarea').val(),
-                    hours : $(this.parentNode).children('.t_cont').children('.t1').val(),
-                    minutes : $(this.parentNode).children('.t_cont').children('.t2').val(),
-                    seconds : $(this.parentNode).children('.t_cont').children('.t3').val(),
-                    pub_time : $(this.parentNode).children('.dt_cont').children('input').val(),
-                    deadline : $(this.parentNode).children('.dt_cont2').children('input').val(),
-                    m_points: $(this.parentNode).children('.m_points').children('input').val(),
+                    qname : $('#newtestcont').children('.hi').children('input').val(),
+                    desc : $('#newtestcont').children('textarea').val(),
+                    hours : $('#newtestcont').children('.t_cont').children('.t1').val(),
+                    minutes : $('#newtestcont').children('.t_cont').children('.t2').val(),
+                    seconds : $('#newtestcont').children('.t_cont').children('.t3').val(),
+                    pub_time : $('#newtestcont').children('.dt_cont').children('input').val(),
+                    deadline : $('#newtestcont').children('.dt_cont2').children('input').val(),
+                    m_points: $('#newtestcont').children('.m_points').children('input').val(),
                     q : JSON.stringify(quetions),
                     csrfmiddlewaretoken : csrf
                 },
@@ -63,19 +62,16 @@ $(document).ready(function(){
 
     $(".new_quetion_btn").click(function(){
         $("#cont").append(`
-        <div class="unquetion" style="border:3px solid white; border-radius:5px; background: rgb(255,0,0);
-        background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);
-        margin: 5px; padding: 5px">
+        <div class="unquetion" style="border:2px solid white; border-radius:5px; background: rgb(255,0,0);
+        background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%); padding: 5px">
         <p class="qname">Текст питання:
-        <input  name="q_name" type="text"></p>
+        <input class="longblock" name="q_name" type="text"></p>
         <p class="points">Кількість балів:
-        <input  name="points" type="number"></p>
-        <hr>
+        <input class="shortblock" name="points" type="number"></p>
         <div class="ans_cont">
         </div>
-        <hr>
-        <button class="new_ans" type="button">Додати відповіть</button>
-        <button class="post_quet" type="button">Зберегти питання</button>
+        <button class="new_ans submission new_t_btn_s" type="button">Додати відповіть</button>
+        <button class="post_quet submission new_t_btn_s" type="button">Зберегти питання</button>
         </div>
         `);
     });
@@ -90,7 +86,7 @@ $(document).ready(function(){
         $(this.parentNode).children('.ans_cont').append(`
         <div class="ans">
         <p>Текст відповіді:</p>
-        <input type="text" class="ans" name="answer">
+        <input type="text" class="ans longblock lbplus" name="answer">
         <input type="checkbox" name="correct">Правильна відповідь</div>
         `);
     });
@@ -116,10 +112,10 @@ $(document).ready(function(){
                 quetions += $(this).children('input.ans').val();
                 quetions += '</p>';
             });
-            var out = `<div class="quetion" style="border:3px solid white; border-radius:5px; background: rgb(255,0,0);
-            background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%); margin: 5px; padding: 5px"><b>Питання:</b> <p class="q">`
-                + qname + '</p><b>Кількість балів:</b> <p class="p">' + points 
-                + '</p>' + quetions + '</div>';
+            var out = `<div class="quetion" style="border:2px solid white; border-radius:5px; background: rgb(255,0,0);
+            background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.2) 0%);     padding: 5px"><b>Питання:</b> <p class="q">`
+                + qname + '</p><b>Кількість балів:</b> <p style="display:inline" class="p">' + points 
+                + '</p><br><b>Відповіді:</b>' + quetions + '</div>';
             $(this.parentNode).replaceWith(out);
         };
     });

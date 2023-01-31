@@ -48,13 +48,17 @@
         <h1 class="title">ЗАПЛАНОВАНІ ТЕСТИ:</h1>
         {% for test in future %}
             <div class="tests">
+                <div class="test-info">
                 <h3>{{ test.title }}</h3>
                 <p>{{ test.description }}</p>
                 <p>Проходження займе: {{ test.time_to_submit }}</p>
                 <p>Дата та час публікації: {{ test.time_to_publish }}</p>
                 <p>Дедлайн: {{ test.deadline }}</p>
-                <a class="edit-profile" style="font-size:15px;" href="{% url 'test' course.code test.id %}">Переглянути</a>
-                <a class="edit-profile" style="font-size:15px;" href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
+                </div>
+                <div class="controls">
+                    <button class="submission"><a class="edit-profile" href="{% url 'test' course.code test.id %}">Переглянути</a></button>
+                    <button class="submission"><a class="edit-profile" href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br></button>
+                </div>
             </div>
         {% endfor %}
         
@@ -90,13 +94,17 @@
             <h1 class="title">ЗАВЕРШЕНІ ТЕСТИ:</h1>
             {% for test in past %}
                 <div class="tests">
+                    <div class="test-info">
                     <h3>{{ test.title }}</h3>
                     <p>{{ test.description }}</p>
+                    </div>
                     {% if user.status == 'T' %}
-                    <a class="edit-profile" style="font-size:15px;" href="{% url 'test' course.code test.id %}">Переглянути</a>
-                    <a class="edit-profile" style="font-size:15px;" href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a>
-                    <a class="edit-profile" style="font-size:15px;" href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br>
-                {% endif %}
+                    <div class="controls">
+                        <button class="submission"><a class="edit-profile" href="{% url 'test' course.code test.id %}">Переглянути</a></button>
+                        <button class="submission"><a class="edit-profile" href="{% url 't_overview' course.code test.id %}">Переглянути оцінки</a></button>
+                        <button class="submission"><a class="edit-profile" href="{% url 'delete_test' course.code test.id %}">Видалити тест</a><br></button>
+                    </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         {% endif %}

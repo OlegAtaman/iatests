@@ -86,5 +86,5 @@ class Submition(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     answers = models.ManyToManyField(Answer)
 
-    def __str__(self):
-        return f"Submission to test {self.test} by student {self.student}"
+    # def __str__(self):
+    #     return f"Submission to test {self.test} by student {self.student}"
