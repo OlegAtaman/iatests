@@ -418,11 +418,16 @@ class TestView(View):
                 for ans in answers:
                     print(request.POST.get(str(ans.id)))
                     if request.POST.get(str(ans.id)) and ans.is_correct:
+                        print('br1')
                         points += points_per_answer
                         all_answers.append(str(ans.id))
                     elif not request.POST.get(str(ans.id)) and not ans.is_correct:
+                        print('br2')
                         points += points_per_answer
+                    elif not request.POST.get(str(ans.id)) and ans.is_correct:
+                        print('br3')
                     else:
+                        print('br4')
                         all_answers.append(str(ans.id))
 
         mark = int(
@@ -461,13 +466,19 @@ def answersoveriew(request, id):
         student_answers = sub.answers.get_queryset()
         questions = []
         for question in sub.test.quetion_set.get_queryset():
+            corrects = 0
             answers = []
             for answer in question.answer_set.get_queryset():
+                if answer.is_correct:
+                    corrects += 1
                 student_choice = answer in student_answers
                 answers.append({"answer": answer, "student_choice": student_choice})
-
-            questions.append({"question": question, "answers": answers})
-
+            if corrects > 1:
+                type = 'check'
+            else:
+                type = 'radio'
+            questions.append({"question": question, "answers": answers, "type": type})
+        print(questions)
         ctx = {
             "submition": sub,
             "questions": questions,

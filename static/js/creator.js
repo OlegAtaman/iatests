@@ -87,7 +87,7 @@ $(document).ready(function(){
         <div class="ans">
         <p>Текст відповіді:</p>
         <input type="text" class="ans longblock lbplus" name="answer">
-        <input type="checkbox" name="correct">Правильна відповідь</div>
+        <input class="correctness" type="checkbox" name="correct">Правильна відповідь</div>
         `);
     });
 
@@ -98,8 +98,14 @@ $(document).ready(function(){
         var count = $(this.parentNode).children('.ans_cont').children().length;
         var quetions = '';
         var cnter = 1;
-        if (count == 0) {
-            alert("Питання має мати принаймні 1 відповідь.")
+        var cor = false;
+        $(this.parentNode).children('.ans_cont').children().each(function(){
+            if ($(this).children('.correctness').is(":checked")) {
+                cor = true;
+            }
+        })
+        if (count == 0 || cor == false) {
+            alert("Питання має мати принаймні 1 правильна відповідь.");
         } else {
             $(cnt).each(function(){
                 quetions += '<p class="a">'

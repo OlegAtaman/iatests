@@ -3,8 +3,8 @@
 {% block content %}
 <input type="hidden" value="{% url 'course' course.code %}" name="url">
 <div class="info-test">
-    <div class="top-test">
-        <div class="test-overview">
+    <div class="test-info-in-test">
+        <div class="test-information">
     
             <h1>{{ test.title }}</h1>
             <h3>{{ test.description }}</h3>
@@ -30,7 +30,6 @@
 {% for q in quetions %}
 <div class="question-stud" id="{{ q.quetion.id }}">
     <h3>{{ q.quetion.content }}</h3>
-    <p>За відповідь: {{ q.quetion.points }} балів</p>
         {% for answer in q.answers %}
             {% if q.type == 'radio' %}
                 <p><input type="radio" name="{{ q.quetion.id }}" value="{{ answer.id }}">{{ answer.content }}</p>
@@ -38,10 +37,11 @@
                 <p><input type="checkbox" name="{{ answer.id }}">{{ answer.content }}</p>
             {% endif %}
         {% endfor %}
+        <p class="hint-quest">За відповідь: {{ q.quetion.points }} балів</p>
             {% if q.type == 'check' %}
-                <p>Завдання з кількома правильними відповідями</p>
+                <p class="hint-quest">Завдання з кількома правильними відповідями</p>
             {% else %}
-                <p>Завдання з однією правильною відповіддю</p>
+                <p class="hint-quest">Завдання з однією правильною відповіддю</p>
         {% endif %}
 </div>
 {% endfor %}

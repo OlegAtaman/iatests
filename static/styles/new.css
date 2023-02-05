@@ -583,8 +583,11 @@ a{
 .submit-test{
     border: 2px solid white;
     border-radius: 5px;
-    padding: 2px;
-    margin: 5px;
+    padding: 5px;
+    margin: 5px auto;
+    font-size: 30px;
+    color:rgb(78, 78, 78);
+    background: linear-gradient(90deg, rgba(255,0,0,0.7) 0%, rgba(222,222,222,0.7) 0%);
 }
 
 .question-stud{
@@ -602,6 +605,9 @@ a{
 }
 
 .timer{
+    position: absolute;
+    right: 10px;
+    top: 10px;
     margin: 20px;
     width: 200px;
     border: 3px solid;
@@ -765,4 +771,60 @@ a{
 
 .pages-jour > a {
     color:rgb(78, 78, 78);
+}
+
+.subinfos {
+    margin: 15px;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px;
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+}
+
+.question-box {
+    margin: 10px auto;
+    width: 90%;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px;
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+}
+
+.answer-box {
+    margin-left: 10px;
+    margin-top: 3px;
+}
+
+.answer-box > p > input {
+    margin-right: 3px;
+}
+
+.answer-box > p > input[type="checkbox"] {
+    border-radius: 1px;
+}
+
+.test-information {
+    margin: 10px auto;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px;
+    background: linear-gradient(90deg, rgba(255,0,0,0.2) 0%, rgba(222,222,222,0.3) 0%);
+}
+
+.question-stud, .tests-teacher {
+    width: 90%;
+    margin: 10px auto;
+}
+
+.test-info-in-test {
+    position: relative;
+}
+
+.hint-quest {
+    color:rgb(211, 211, 211);
+    font-size: small;
+}
+
+.info-test {
+    position: relative;
 }
